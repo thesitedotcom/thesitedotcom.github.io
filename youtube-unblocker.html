@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Unblocker</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+    
+        .text {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            display: inline-block; /* Ensure the background only wraps around the content */
+            width: auto; /* Automatically size the background to fit the content */
+            margin-bottom: 10px; /* Add some space between text blocks */
+            z-index: 2;
+        }
+        .text-2 {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block; /* Ensure the background only wraps around the content */
+            width: auto; /* Automatically size the background to fit the content */
+            margin-bottom: 10px; /* Add some space between text blocks */
+            z-index: 2;
+            text-align: bottom left;
+        }
+        </style>
+    <script>
+    // Check if the user is authenticated
+    if (sessionStorage.getItem("authenticated") !== "true") {
+        // Redirect to the password entry page
+        window.location.href = "password.html";
+    }
+    </script>
+</head>
+<body>
+<div class="text">
+    <h2>YouTube Unblocker</h2>
+    </div>
+    <form id="youtubeForm">
+    <div class="text">
+        <label for="youtubeLink">Enter YouTube Video Link:</label><br>
+        
+        <input type="text" id="youtubeLink" name="youtubeLink" required><br><br>
+        <button type="button" onclick="convertLink()">Convert Link</button>
+        </div>
+    </form>
+    <br>
+    <div id="result"></div>
+
+    <script>
+        function convertLink() {
+            var inputLink = document.getElementById("youtubeLink").value;
+            var embedLink = inputLink.replace("watch?v=", "embed/").replace("www.youtube", "www.youtube-nocookie");
+            var resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "<strong>Embed Link:</strong> " + embedLink + "<br>";
+            var openButton = document.createElement("button");
+            openButton.textContent = "Open in New Tab";
+            openButton.onclick = function() {
+                window.open(embedLink, "_blank");
+            };
+            resultDiv.appendChild(openButton);
+        }
+    </script>
+    <script src="rbg.js"></script>
+    <footer>
+    
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="text-2">
+        <a href="index.html">Back to Homepage</a>
+        </div>
+</footer>
+</html>

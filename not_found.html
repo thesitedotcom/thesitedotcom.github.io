@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Found</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <script>
+    // Check if the user is authenticated
+    if (sessionStorage.getItem("authenticated") !== "true") {
+        // Redirect to the password entry page
+        window.location.href = "password.html";
+    }
+    </script>
+  </head>
+  <body>
+    <h1>Page Not Found</h1>
+    <p>The requested page was not found.</p>
+        <a href="index.html">Back to Homepage</a>
+  </body>
+</html>
