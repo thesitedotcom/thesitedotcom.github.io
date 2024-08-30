@@ -1656,6 +1656,13 @@ html[dir='rtl'].offline .icon-offline {
   }
 }
 </style>
+    <script>
+        // Check if the user is authenticated
+        if (sessionStorage.getItem("authenticated") !== "true") {
+            // Redirect to the password entry page
+            window.location.href = "../password";
+        }
+    </script>
   <script>// Copyright 2013 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
