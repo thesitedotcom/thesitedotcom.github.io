@@ -35,17 +35,19 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 <![endif]-->
 
 <!--[if lt IE9]><script src="excanvas.compiled.js"></script><![endif]-->
-	<style>
+	
+</style>
+    <style>
         /* Basic styling for the footer */
         #footer {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.4);
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 5px;
             z-index: 9999;
             transition: transform 0.3s ease; /* Smooth transition */
         }
@@ -60,7 +62,7 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
             position: fixed;
             bottom: 10px;
             left: 10px;
-            background-color: #444;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             border: none;
             padding: 5px 10px;
@@ -70,7 +72,7 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
         }
 
         #toggle-button:hover {
-            background-color: #666;
+            background-color: rgba(0, 0, 0, 1);
         }
     </style>
 </head>
@@ -211,8 +213,7 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 
 	</div>
 
-</div>
-	<button id="toggle-button">Show Footer</button>
+</div><button id="toggle-button">Show</button>
 
 <footer id="footer" class="collapsed">
     <a href="../games" style="color: white; margin-right: 20px;">Back to Games</a>
@@ -229,9 +230,9 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
         
         // Update button text based on footer state
         if (footer.classList.contains("collapsed")) {
-            toggleButton.textContent = "Show Footer";
+            toggleButton.textContent = "Show";
         } else {
-            toggleButton.textContent = "Hide Footer";
+            toggleButton.textContent = "Hide";
         }
     });
 </script>
