@@ -1,0 +1,36 @@
+ /* Basic styling for the footer */
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            text-align: center;
+            padding: 5px;
+            z-index: 9999;
+            transition: transform 0.3s ease; /* Smooth transition */
+        }
+
+        /* Initially collapsed footer */
+        #footer.collapsed {
+            transform: translateY(100%); /* Moves footer out of view */
+        }
+
+        /* Style for the toggle button */
+        #toggle-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            z-index: 10000;
+            border-radius: 5px;
+        }
+
+        #toggle-button:hover {
+            background-color: rgba(0, 0, 0, 1);
+        }
