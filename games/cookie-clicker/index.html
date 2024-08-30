@@ -35,6 +35,44 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 <![endif]-->
 
 <!--[if lt IE9]><script src="excanvas.compiled.js"></script><![endif]-->
+	<style>
+        /* Basic styling for the footer */
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 9999;
+            transition: transform 0.3s ease; /* Smooth transition */
+        }
+
+        /* Initially collapsed footer */
+        #footer.collapsed {
+            transform: translateY(100%); /* Moves footer out of view */
+        }
+
+        /* Style for the toggle button */
+        #toggle-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            z-index: 10000;
+            border-radius: 5px;
+        }
+
+        #toggle-button:hover {
+            background-color: #666;
+        }
+    </style>
 </head>
 <body>
 
@@ -174,10 +212,29 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 	</div>
 
 </div>
-	<footer style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.8); color: white; text-align: center; padding: 10px; z-index: 9999;">
+	<button id="toggle-button">Show Footer</button>
+
+<footer id="footer" class="collapsed">
     <a href="../games" style="color: white; margin-right: 20px;">Back to Games</a>
     <a href="../index" style="color: white;">Back to Homepage</a>
 </footer>
+
+<script>
+    const footer = document.getElementById("footer");
+    const toggleButton = document.getElementById("toggle-button");
+
+    toggleButton.addEventListener("click", function() {
+        // Toggle the 'collapsed' class on the footer
+        footer.classList.toggle("collapsed");
+        
+        // Update button text based on footer state
+        if (footer.classList.contains("collapsed")) {
+            toggleButton.textContent = "Show Footer";
+        } else {
+            toggleButton.textContent = "Hide Footer";
+        }
+    });
+</script>
 
 
 </body>
