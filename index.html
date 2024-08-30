@@ -55,14 +55,7 @@ body::before {
             font-size: 14px;
         }
 </style>
-    
-    <script>
-        // Check if the user is authenticated
-        if (sessionStorage.getItem("authenticated") !== "true") {
-            // Redirect to the password entry page
-            window.location.href = "/password";
-        }
-    </script>
+    <script src="scripts/passwordReturn.js"></script>
 </head>
 <body>
 <div class="content">
@@ -95,7 +88,7 @@ body::before {
 
 
 
-    <script src="rbg.js"></script>
+    <script src="scripts/rbg.js"></script>
 </div>
 </body>
 </html>
