@@ -1656,6 +1656,44 @@ html[dir='rtl'].offline .icon-offline {
   }
 }
 </style>
+    <style>
+        /* Basic styling for the footer */
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 9999;
+            transition: transform 0.3s ease; /* Smooth transition */
+        }
+
+        /* Initially collapsed footer */
+        #footer.collapsed {
+            transform: translateY(100%); /* Moves footer out of view */
+        }
+
+        /* Style for the toggle button */
+        #toggle-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            z-index: 10000;
+            border-radius: 5px;
+        }
+
+        #toggle-button:hover {
+            background-color: #666;
+        }
+    </style>
     <script>
         // Check if the user is authenticated
         if (sessionStorage.getItem("authenticated") !== "true") {
@@ -6747,10 +6785,32 @@ class LoadTimeData {
 
   console.warn('crbug/1173575, non-JS module files deprecated.');</script><script jstcache="0">const pageData = {"dinoGameA11yAriaLabel":"","dinoGameA11yDescription":"Dino game. A pixelated dinosaur dodges cacti and pterodactyls as it runs across a desolate landscape. When you hear an audio cue, press space to jump over obstacles.","dinoGameA11yGameOver":"Game over, your score is $1.","dinoGameA11yHighScore":"Your highest score is $1.","dinoGameA11yJump":"Jump!","dinoGameA11ySpeedToggle":"Start slower","dinoGameA11yStartGame":"Game started.","errorCode":"","fontfamily":"'Segoe UI', Tahoma, sans-serif","fontsize":"75%","heading":{"hostName":"dino","msg":"Press space to play"},"iconClass":"icon-offline","language":"en","textdirection":"ltr","title":"chrome://dino/"};loadTimeData.data = pageData;var tp = document.getElementById('t');jstProcess(new JsEvalContext(pageData), tp);</script>
 
-   <footer style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.8); color: white; text-align: center; padding: 5px; z-index: 9999;">
+  
+
+<button id="toggle-button">Show Footer</button>
+
+<footer id="footer" class="collapsed">
     <a href="../games" style="color: white; margin-right: 20px;">Back to Games</a>
     <a href="../index" style="color: white;">Back to Homepage</a>
 </footer>
+
+<script>
+    const footer = document.getElementById("footer");
+    const toggleButton = document.getElementById("toggle-button");
+
+    toggleButton.addEventListener("click", function() {
+        // Toggle the 'collapsed' class on the footer
+        footer.classList.toggle("collapsed");
+        
+        // Update button text based on footer state
+        if (footer.classList.contains("collapsed")) {
+            toggleButton.textContent = "Show Footer";
+        } else {
+            toggleButton.textContent = "Hide Footer";
+        }
+    });
+</script>
+
 
 </body>
 </html>
