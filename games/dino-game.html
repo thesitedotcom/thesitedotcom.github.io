@@ -1663,7 +1663,7 @@ html[dir='rtl'].offline .icon-offline {
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.4);
             color: white;
             text-align: center;
             padding: 10px;
@@ -1681,7 +1681,7 @@ html[dir='rtl'].offline .icon-offline {
             position: fixed;
             bottom: 10px;
             left: 10px;
-            background-color: #444;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             border: none;
             padding: 5px 10px;
@@ -1691,7 +1691,7 @@ html[dir='rtl'].offline .icon-offline {
         }
 
         #toggle-button:hover {
-            background-color: #666;
+            background-color: rgba(0, 0, 0, 0.9);
         }
     </style>
     <script>
@@ -6804,9 +6804,9 @@ class LoadTimeData {
         
         // Update button text based on footer state
         if (footer.classList.contains("collapsed")) {
-            toggleButton.textContent = "Show Footer";
+            toggleButton.textContent = "^";
         } else {
-            toggleButton.textContent = "Hide Footer";
+            toggleButton.textContent = "⌄";
         }
     });
 </script>
