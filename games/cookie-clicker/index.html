@@ -6,6 +6,14 @@
 </script>
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+	<script>
+        // Check if the user is authenticated
+        if (sessionStorage.getItem("authenticated") !== "true") {
+            // Redirect to the password entry page
+            window.location.href = "../password";
+        }
+    </script>
+	
 
 <title>Cookie Clicker</title>
 <!--
@@ -166,6 +174,11 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 	</div>
 
 </div>
+	<footer style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.8); color: white; text-align: center; padding: 10px; z-index: 9999;">
+    <a href="../games" style="color: white; margin-right: 20px;">Back to Games</a>
+    <a href="../index" style="color: white;">Back to Homepage</a>
+</footer>
+
 
 </body>
 </html>
