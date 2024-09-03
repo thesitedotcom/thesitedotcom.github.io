@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../footerStyle.css">
+    <link rel="stylesheet" href="../style.css">
+    <title>Pacman</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove border */
+        }
+    </style>
+      <script src="../scripts/passwordReturn.js"></script>
+</head>
+<body>
+    <iframe src="https://pacman.js.org/" allowtransparency="true" allowfullscreen></iframe>
+      <button id="toggle-button">Show</button>
+
+<footer id="footer" class="collapsed">
+    <a href="../games" style="color: white; margin-right: 20px;">Back to Games</a>
+    <a href="../index" style="color: white;">Back to Homepage</a>
+</footer>
+
+<script src="../scripts/return.js"></script>
+</body>
+</html>
