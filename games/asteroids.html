@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../footerStyle.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Asteroids</title>
     <style>
         html, body {
@@ -16,22 +18,17 @@
             border: none; /* Remove border */
         }
     </style>
-    <script>
-        // Check if the user is authenticated
-        if (sessionStorage.getItem("authenticated") !== "true") {
-            // Redirect to the password entry page
-            window.location.href = "../password";
-        }
-    </script>
+      <script src="../scripts/passwordReturn.js"></script>
 </head>
 <body>
     <iframe src="https://scratch.mit.edu/projects/889628009/embed" allowtransparency="true" allowfullscreen></iframe>
-    <footer>
-    
-    <div class="text-2">
-    <a href="../games">Back to Games</a>
-      <a href="../index">Back to Homepage</a>
-        </div>
+      <button id="toggle-button">Show</button>
+
+<footer id="footer" class="collapsed">
+    <a href="../games" style="color: white; margin-right: 20px;">Back to Games</a>
+    <a href="../index" style="color: white;">Back to Homepage</a>
 </footer>
+
+<script src="../scripts/return.js"></script>
 </body>
 </html>
