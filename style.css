@@ -1,10 +1,5 @@
-@font-face {
-    font-family: 'Monocraft';
-    src: url('Monocraft.woff') format('woff');
-}
-
 body {
-    font-family: 'Monocraft';
+    font-family: monospace;
     background-color: black;
     background-size: cover;
     background-position: center;
