@@ -1,8 +1,13 @@
+@font-face {
+    font-family: 'Monocraft';
+    src: url('Monocraft.ttf') format('truetype');
+}
+
 body {
+    font-family: 'Monocraft', monospace;
     background-color: black;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: white;
-    font-family: monospace, courier;
 }
