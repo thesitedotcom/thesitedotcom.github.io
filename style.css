@@ -1,5 +1,12 @@
+@font-face {
+    font-family: 'Monocraft'; /* Give your font a name */
+    src: url('Monocraft.ttf') format('truetype'); /* Path to your .ttf file */
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    font-family: monospace, courier;
+    font-family: 'Monocraft', monospace;
     background-color: black;
     background-size: cover;
     background-position: center;
