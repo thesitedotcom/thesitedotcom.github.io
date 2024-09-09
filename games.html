@@ -56,17 +56,21 @@
         .h2-container a:hover {
             text-decoration: underline;
         }
-        .text-2 {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 5px;
-            border-radius: 5px;
-            display: inline-block; /* Ensure the background only wraps around the content */
-            width: auto; /* Automatically size the background to fit the content */
-            margin-bottom: 10px; /* Add some space between text blocks */
-            z-index: 2;
-            text-align: bottom left;
+
+        /* Flexbox container for side-by-side sections */
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
         }
-        
+
+        .flex-item {
+            flex: 1;
+            margin-right: 20px; /* Add some space between the sections */
+        }
+
+        .flex-item:last-child {
+            margin-right: 0; /* Remove margin from the last item */
+        }
     </style>
    <script src="scripts/passwordReturn.js"></script>
 </head>
@@ -77,46 +81,82 @@
     <br>
     <br>
 
-    /* Josh's Games */
-    
-    <div class="text">
-        <div class="h2-container">
-            <h2>Josh's Games</h2>
-            </div>
+    <!-- Flexbox container for side-by-side sections -->
+    <div class="flex-container">
+        <!-- Josh's Games -->
+        <div class="flex-item">
             <div class="text">
-            <a href="/games/mad-rabbit">Mad Rabbit</a> |
-            <a href="/games/the-flesh">The Flesh</a> |
-            <a href="/games/turtle-beach">Turtle Beach</a> |
-            <a href="/games/arrow-of-doom">Arrow Of Doom</a> |
-            <a href="/games/zombie-apocalypse">Zombie Apocalypse</a> |
-            <a href="/games/dodge">Dodge</a> |
-            <a href="/games/dodge-but-harder">Dodge, But Harder</a> |
-            <a href="/games/impossible-game">Impossible Game</a> |
-            <a href="/games/the-tv">The TV</a> |
-            <a href="/games/asteroids">Asteroids</a>
+                <div class="h2-container">
+                    <h2>Josh's Games</h2>
+                </div>
+                <div class="text">
+                    <a href="/games/mad-rabbit">Mad Rabbit</a> |
+                    <a href="/games/the-flesh">The Flesh</a> |
+                    <a href="/games/turtle-beach">Turtle Beach</a> |
+                    <a href="/games/arrow-of-doom">Arrow Of Doom</a> |
+                    <a href="/games/zombie-apocalypse">Zombie Apocalypse</a> |
+                    <a href="/games/dodge">Dodge</a> |
+                    <a href="/games/dodge-but-harder">Dodge, But Harder</a> |
+                    <a href="/games/impossible-game">Impossible Game</a> |
+                    <a href="/games/the-tv">The TV</a> |
+                    <a href="/games/asteroids">Asteroids</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flash Games -->
+        <div class="flex-item">
+            <div class="text">
+                <div class="h2-container">
+                    <h2>Flash Games</h2>
+                </div>
+                <div class="text">
+                    <div class="text">
+                        <h3>Duck Life</h3>
+                        <a href="/games/duck-life">Duck Life</a> |
+                        <a href="/games/duck-life-2">Duck Life 2</a> |
+                        <a href="/games/duck-life-3">Duck Life 3</a> |
+                        <br>
+                        <a href="/games/duck-life-4">Duck Life 4</a>
+                    </div>
+                    <div class="text">
+                        <h3>Learn 2 Fly</h3>
+                        <a href="/games/learn-2-fly">Learn 2 Fly</a> |
+                        <a href="/games/learn-2-fly-2">Learn 2 Fly 2</a>
+                    </div>
+                    <div class="text">
+                        <h3>Bloons Tower Defense</h3>
+                        <a href="/games/bloons-tower-defense">Bloons TD</a> |
+                        <a href="/games/bloons-tower-defense-2">Bloons TD 2</a>
+                    </div>
+                    <div class="text">
+                        <h3>More</h3>
+                        <a href="/games/meat-boy">Meat Boy</a> |
+                        <a href="/games/toss-the-turtle">Toss the Turtle</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-<br>
+    <br>
 
-    /* Scratch Games */
-    
+    <!-- Scratch Games -->
     <div class="text">
         <div class="h2-container">
             <h2>Scratch Games</h2>
-            </div>
-            <div class="text">
+        </div>
+        <div class="text">
             <a href="/games/tomogotchi">Tomogotchi</a>
         </div>
     </div>
-<br>
+    <br>
 
-    /* Other Games */
-    
+    <!-- Other Games -->
     <div class="text">
         <div class="h2-container">
             <h2>Other Games</h2>
-            </div>
-            <div class="text">
+        </div>
+        <div class="text">
             <a href="/games/cookie-clicker">Cookie Clicker</a> |
             <a href="/games/minecraft">Minecraft</a> |
             <a href="/games/dino-game">Dino Game</a> |
@@ -125,50 +165,16 @@
         </div>
     </div>
     <br>
-    
-    /* Flash Games */
-    
-    <div class="text">
-        <div class="h2-container">
-            <h2>Flash Games</h2>
-            </div>
-            <div class="text">
-                <div class="text">
-                    <h3>Duck Life</h3>
-            <a href="/games/duck-life">Duck Life</a> |
-            <a href="/games/duck-life-2">Duck Life 2</a> |
-            <a href="/games/duck-life-3">Duck Life 3</a> |
-                    <br>
-            <a href="/games/duck-life-4">Duck Life 4</a>
-                </div>
-                <div class="text">
-                <h3>Learn 2 Fly</h3>
-            <a href="/games/learn-2-fly">Learn 2 Fly</a> |
-            <a href="/games/learn-2-fly-2">Learn 2 Fly 2</a>
-                </div>
-                <div class="text">
-                <h3>Bloons Tower Defense</h3>
-            <a href="/games/bloons-tower-defense">Bloons TD</a> |
-            <a href="/games/bloons-tower-defense-2">Bloons TD 2</a>
-                </div>
-                <div class="text">
-                <h3>More</h3>
-            <a href="/games/meat-boy">Meat Boy</a> |
-            <a href="/games/toss-the-turtle">Toss the Turtle</a>
-                </div>
-        </div>
-    </div>
-    
 
     <script src="scripts/rbg.js"></script>
     
     <footer>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdVkSI10BCB8QxZU3n4mcICU29rZuMOouNa0ZixFJQMHzmhHA/viewform?embedded=true" width="640" height="442" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdVkSI10BCB8QxZU3n4mcICU29rZuMOouNa0ZixFJQMHzmhHA/viewform?embedded=true" width="640" height="442" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </footer>
     <footer>
-    <div class="text-2">
-        <a href="/index">Back to Homepage</a>
+        <div class="text-2">
+            <a href="/index">Back to Homepage</a>
         </div>
-</footer>
+    </footer>
 </body>
 </html>
