@@ -13,7 +13,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity to dim the background */
+        background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity to dim the background */
         z-index: 0.1;
         pointer-events: none;
         background-image: var(--background-image); /* Use CSS variable for random background */
@@ -32,6 +32,7 @@
     }
 
     .playlist-container {
+        background-color: rgba(0, 0, 0, 0.6);
         display: flex;
         flex-direction: column;
         background-color: #222;
@@ -41,6 +42,7 @@
     }
 
     .content {
+        background-color: rgba(0, 0, 0, 0.6);
         display: none;
         padding-left: 20px;
         position: relative;
@@ -48,7 +50,7 @@
     }
 
     .text {
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.6);
         padding: 20px;
         border-radius: 10px;
         display: inline-block; /* Ensure the background only wraps around the content */
