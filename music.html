@@ -126,6 +126,15 @@
     button:hover {
         background-color: #666;
     }
+    
+    .currently-playing {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
 </style>
 <script src="scripts/passwordReturn.js"></script>
     <script>
@@ -151,17 +160,24 @@
             });
         });
 
-        function playAudio(playerId, file) {
-            var audioPlayer = document.getElementById(playerId);
-            audioPlayer.src = file;
-            audioPlayer.style.display = "block"; // Show the audio player
-            audioPlayer.play();
+        function playAudio(playerId, file, songTitle) {
+    var audioPlayer = document.getElementById(playerId);
+    var currentSongElement = document.getElementById('currentSong' + playerId.slice(-1));
+    
+    audioPlayer.src = file;
+    audioPlayer.style.display = "block"; // Show the audio player
+    audioPlayer.play();
 
-            // Hide the audio player when the music stops playing
-            audioPlayer.onended = function() {
-                audioPlayer.style.display = "none";
-            };
-        }
+    // Update the currently playing song title
+    currentSongElement.textContent = songTitle;
+
+    // Hide the audio player when the music stops playing
+    audioPlayer.onended = function() {
+        audioPlayer.style.display = "none";
+        currentSongElement.textContent = ""; // Clear the song title when playback ends
+    };
+}
+
 
         function shufflePlaylist(playlistId, playerId) {
             var playlist = document.getElementById(playlistId);
@@ -179,14 +195,18 @@
             }
         }
 
-        function playShuffledSongs(songs, playerId) {
+    function playShuffledSongs(songs, playerId) {
     if (songs.length === 0) return;
 
     var audioPlayer = document.getElementById(playerId);
+    var currentSongElement = document.getElementById('currentSong' + playerId.slice(-1));
     var currentIndex = 0;
 
     // Show the audio player before playing the first song
     audioPlayer.style.display = "block";
+
+    var songTitle = songs[currentIndex].querySelector('a').textContent;
+    currentSongElement.textContent = songTitle;
 
     audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
     audioPlayer.play();
@@ -197,13 +217,18 @@
             // Show the audio player before playing the next song
             audioPlayer.style.display = "block";
             
+            var songTitle = songs[currentIndex].querySelector('a').textContent;
+            currentSongElement.textContent = songTitle;
+
             audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
             audioPlayer.play();
         } else {
             audioPlayer.style.display = "none"; // Hide the audio player when all songs are finished
+            currentSongElement.textContent = ""; // Clear the song title when playback ends
         }
     };
 }
+
 
     </script>
 </head>
@@ -215,20 +240,22 @@
 <h2></h2>
     <!-- Playlist 1 -->
     <div class="playlist-container">
-        <h2>Austin</h2>
-        <button class="collapsible">Show Playlist</button>
-        <div class="content">
-            <ul class="playlist" id="playlist1">
-                <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song1.mp3')">Song 1</a></li>
-                <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song2.mp3')">Song 2</a></li>
-                <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song3.mp3')">Song 3</a></li>
-            </ul>
-        </div>
-        <button onclick="shufflePlaylist('playlist1', 'audioPlayer1')">Shuffle All</button>
-        <audio id="audioPlayer1" controls>
-            Your browser does not support the audio element.
-        </audio>
+    <h2>Austin</h2>
+    <button class="collapsible">Show Playlist</button>
+    <div class="content">
+        <ul class="playlist" id="playlist1">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        </ul>
     </div>
+    <button onclick="shufflePlaylist('playlist1', 'audioPlayer1')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong1"></span></div>
+    <audio id="audioPlayer1" controls>
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
 
     <!-- Repeat similar structure for Playlist 2 to Playlist 10 -->
 
