@@ -57,7 +57,7 @@
             text-decoration: underline;
         }
 
-        /* Flexbox container for side-by-side sections */
+        /* Flexbox container for layout */
         .flex-container {
             display: flex;
             justify-content: space-between;
@@ -65,11 +65,11 @@
 
         .flex-item {
             flex: 1;
-            margin-right: 20px; /* Add some space between the sections */
+            margin-right: 20px;
         }
 
         .flex-item:last-child {
-            margin-right: 0; /* Remove margin from the last item */
+            margin-right: 0;
         }
     </style>
    <script src="scripts/passwordReturn.js"></script>
@@ -81,9 +81,9 @@
     <br>
     <br>
 
-    <!-- Flexbox container for side-by-side sections -->
+    <!-- Flexbox container for layout -->
     <div class="flex-container">
-        <!-- Josh's Games -->
+        <!-- Josh's Games and related sections -->
         <div class="flex-item">
             <div class="text">
                 <div class="h2-container">
@@ -100,6 +100,32 @@
                     <a href="/games/impossible-game">Impossible Game</a> |
                     <a href="/games/the-tv">The TV</a> |
                     <a href="/games/asteroids">Asteroids</a>
+                </div>
+            </div>
+            <br>
+
+            <!-- Scratch Games -->
+            <div class="text">
+                <div class="h2-container">
+                    <h2>Scratch Games</h2>
+                </div>
+                <div class="text">
+                    <a href="/games/tomogotchi">Tomogotchi</a>
+                </div>
+            </div>
+            <br>
+
+            <!-- Other Games -->
+            <div class="text">
+                <div class="h2-container">
+                    <h2>Other Games</h2>
+                </div>
+                <div class="text">
+                    <a href="/games/cookie-clicker">Cookie Clicker</a> |
+                    <a href="/games/minecraft">Minecraft</a> |
+                    <a href="/games/dino-game">Dino Game</a> |
+                    <a href="/games/pacman">Pacman</a> |
+                    <a href="/games/captain-callisto">Captain Callisto</a>
                 </div>
             </div>
         </div>
@@ -136,32 +162,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <br>
-
-    <!-- Scratch Games -->
-    <div class="text">
-        <div class="h2-container">
-            <h2>Scratch Games</h2>
-        </div>
-        <div class="text">
-            <a href="/games/tomogotchi">Tomogotchi</a>
-        </div>
-    </div>
-    <br>
-
-    <!-- Other Games -->
-    <div class="text">
-        <div class="h2-container">
-            <h2>Other Games</h2>
-        </div>
-        <div class="text">
-            <a href="/games/cookie-clicker">Cookie Clicker</a> |
-            <a href="/games/minecraft">Minecraft</a> |
-            <a href="/games/dino-game">Dino Game</a> |
-            <a href="/games/pacman">Pacman</a> |
-            <a href="/games/captain-callisto">Captain Callisto</a>
         </div>
     </div>
     <br>
