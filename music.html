@@ -164,7 +164,7 @@
 
         function playAudio(playerId, file, songTitle) {
     var audioPlayer = document.getElementById(playerId);
-    var currentSongElement = document.getElementById('currentSong' + currentSongNumber);
+    var currentSongElement = document.getElementById('currentSong' + playerId.slice(-2));
     
     audioPlayer.src = file;
     audioPlayer.style.display = "block"; // Show the audio player
@@ -201,7 +201,7 @@
     if (songs.length === 0) return;
 
     var audioPlayer = document.getElementById(playerId);
-   var currentSongElement = document.getElementById('currentSong' + currentSongNumber);
+    var currentSongElement = document.getElementById('currentSong' + playerId.slice(-2));
     var currentIndex = 0;
 
     // Show the audio player before playing the first song
@@ -245,15 +245,15 @@
     <h2>Austin</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist1">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer1', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist01">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer01', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer01', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer01', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist1', 'audioPlayer1')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong1"></span></div>
-    <audio id="audioPlayer1" controls>
+    <button onclick="shufflePlaylist('playlist01', 'audioPlayer01')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong01"></span></div>
+    <audio id="audioPlayer01" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -266,15 +266,15 @@
     <h2>Blake</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist2">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer2', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer2', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer2', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist02">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer02', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer02', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer02', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist2', 'audioPlayer2')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong2"></span></div>
-    <audio id="audioPlayer2" controls>
+    <button onclick="shufflePlaylist('playlist02', 'audioPlayer02')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong02"></span></div>
+    <audio id="audioPlayer02" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -284,15 +284,15 @@
     <h2>Bryce</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist3">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer3', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer3', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer3', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist03">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer03', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer03', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer03', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist3', 'audioPlayer3')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong3"></span></div>
-    <audio id="audioPlayer3" controls>
+    <button onclick="shufflePlaylist('playlist03', 'audioPlayer03')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong03"></span></div>
+    <audio id="audioPlayer03" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -304,15 +304,15 @@
     <h2>Josh</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist4">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer4', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer4', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer4', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist04">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer04', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer04', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer04', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist4', 'audioPlayer4')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong4"></span></div>
-    <audio id="audioPlayer4" controls>
+    <button onclick="shufflePlaylist('playlist04', 'audioPlayer04')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong04"></span></div>
+    <audio id="audioPlayer04" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -322,15 +322,15 @@
     <h2>Levi</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist5">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer5', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer5', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer5', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist05">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer05', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer05', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer05', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist5', 'audioPlayer5')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong5"></span></div>
-    <audio id="audioPlayer5" controls>
+    <button onclick="shufflePlaylist('playlist05', 'audioPlayer05')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong05"></span></div>
+    <audio id="audioPlayer05" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -340,15 +340,15 @@
     <h2>Micah</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist6">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer6', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer6', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer6', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist06">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer06', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer06', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer06', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist6', 'audioPlayer6')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong6"></span></div>
-    <audio id="audioPlayer6" controls>
+    <button onclick="shufflePlaylist('playlist06', 'audioPlayer06')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong06"></span></div>
+    <audio id="audioPlayer06" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -364,15 +364,15 @@
     <h2>Hazbin Hotel</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist7">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer7', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer7', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer7', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist07">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer07', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer07', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer07', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist7', 'audioPlayer7')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong7"></span></div>
-    <audio id="audioPlayer7" controls>
+    <button onclick="shufflePlaylist('playlist07', 'audioPlayer07')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong07"></span></div>
+    <audio id="audioPlayer07" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -382,15 +382,15 @@
     <h2>Doom</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist8">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer8', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer8', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer8', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist08">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer08', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer08', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer08', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist8', 'audioPlayer8')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong8"></span></div>
-    <audio id="audioPlayer8" controls>
+    <button onclick="shufflePlaylist('playlist08', 'audioPlayer08')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong08"></span></div>
+    <audio id="audioPlayer08" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
@@ -400,15 +400,15 @@
     <h2>Minecraft</h2>
     <button class="collapsible">Show Playlist</button>
     <div class="content">
-        <ul class="playlist" id="playlist9">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer9', 'song1.mp3', 'Song 1')">Song 1</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer9', 'song2.mp3', 'Song 2')">Song 2</a></li>
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer9', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        <ul class="playlist" id="playlist09">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer09', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer09', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer09', 'song3.mp3', 'Song 3')">Song 3</a></li>
         </ul>
     </div>
-    <button onclick="shufflePlaylist('playlist9', 'audioPlayer9')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong9"></span></div>
-    <audio id="audioPlayer9" controls>
+    <button onclick="shufflePlaylist('playlist09', 'audioPlayer09')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong09"></span></div>
+    <audio id="audioPlayer09" controls>
         Your browser does not support the audio element.
     </audio>
 </div>
