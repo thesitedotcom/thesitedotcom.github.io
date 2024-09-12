@@ -164,7 +164,7 @@
 
         function playAudio(playerId, file, songTitle) {
     var audioPlayer = document.getElementById(playerId);
-    var currentSongElement = document.getElementById(playerId);
+    var currentSongElement = document.getElementById('currentSong' + (parseInt(playerId.slice(-1)) < 10 ? playerId.slice(-1) : playerId.slice(-2)));
     
     audioPlayer.src = file;
     audioPlayer.style.display = "block"; // Show the audio player
@@ -201,7 +201,7 @@
     if (songs.length === 0) return;
 
     var audioPlayer = document.getElementById(playerId);
-    var currentSongElement = document.getElementById(playerId);
+    var currentSongElement = document.getElementById('currentSong' + (parseInt(playerId.slice(-1)) < 10 ? playerId.slice(-1) : playerId.slice(-2)));
     var currentIndex = 0;
 
     // Show the audio player before playing the first song
