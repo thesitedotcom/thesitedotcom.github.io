@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Minecraft Javascript Edition</title>
-		<link id="vtfont" href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+		<link id="style.css" rel="stylesheet">
     <link rel="stylesheet" href="../footerStyle.css">
     <link rel="stylesheet" href="../style.css">
 	</head>
@@ -917,7 +917,7 @@ function MineJS() {
 		}
 	}
 	function textSize(size) {
-		ctx.font = size + 'px Monospace' // VT323
+		ctx.font = size + '"Monocraft"' // VT323
 	}
 	let strokeWeight = function(num) {
 		ctx.lineWidth = num
@@ -5317,7 +5317,7 @@ function MineJS() {
 		function title() {
 			let title = "MINECRAFT"
 			let subtext = "JAVASCRIPT EDITION (By Karlee Rae#7317)"
-			let font = "VT323,monospace"
+			let font = ""Monocraft",monospace"
 			strokeWeight(1)
 			ctx.textAlign = 'center'
 
@@ -5354,7 +5354,7 @@ function MineJS() {
 			ctx.putImageData(mainbg, 0, 0)
 			title()
 			fill(220)
-			ctx.font = "20px VT323"
+			ctx.font = "20px "Monocraft""
 			ctx.textAlign = 'left'
 			text("Minecraft " + version, width - (width - 2), height - 2)
 		}
