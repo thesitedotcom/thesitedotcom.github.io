@@ -9,9 +9,11 @@
 	</head>
 	<style>
 		body {
+			font-family: 'Monocraft', monospace;
 			overflow: hidden; /* Hide scrollbars */
 		}
 		.world-select {
+			font-family: 'Monocraft', monospace;
 			width: 99vw;
 			min-width: 300px;
 			height: calc(100vh - 220px);
@@ -27,7 +29,7 @@
 			height: auto;
 			border: 1px solid black;
 			font-size: 18px;
-			font-family: 'Courier New', Courier, monospace;
+			font-family: 'Monocraft', monospace;
 			color: rgb(180, 180, 180);
 			margin: 0 auto;
 			margin-top: 15px;
@@ -35,6 +37,7 @@
 			cursor: pointer;
 		}
 		strong {
+			font-family: 'Monocraft', monospace;
 			color: white;
 		}
 		.selected {
@@ -42,6 +45,7 @@
 			padding: 3px;
 		}
 		input[type=text] {
+			font-family: 'Monocraft', monospace;
 			background-color: black;
 			caret-color: white;
 			border: 2px solid gray;
@@ -50,9 +54,11 @@
 			padding-left: 12px;
 		}
 		input[type=text]:focus {
+			font-family: 'Monocraft', monospace;
 			border: 2px solid lightgray;
 		}
 		#boxcentertop {
+			font-family: 'Monocraft', monospace;
 			z-index: 1;
 			width: 80vw;
 			max-width: 400px;
@@ -63,12 +69,13 @@
 			margin: 0 auto;
 		}
 		.hidden {
+			font-family: 'Monocraft', monospace;
 			display: none !important;
 		}
 		#onhover {
 			background-color: rgba(0, 0, 0, 0.9);
 			color: rgb(200, 200, 200);
-			font-family: 'Courier New', Courier, monospace;
+			font-family: 'Monocraft', monospace;
 			word-wrap: normal;
 			width: auto;
 			max-width: 400px;
@@ -78,6 +85,7 @@
 			cursor: default;
 		}
 		#quota {
+			font-family: 'Monocraft', monospace;
 			display: block;
 			position: absolute;
 			width: 99vw;
@@ -88,6 +96,12 @@
 			justify-content: center;
 			text-align: center;
 			color: white;
+		}
+		@font-face {
+			font-family: 'Monocraft'; /* Give your font a name */
+			src: url('Monocraft.ttf') format('truetype'); /* Path to your .ttf file */
+			font-weight: normal;
+			font-style: normal;
 		}
 	</style>
 	<body>
