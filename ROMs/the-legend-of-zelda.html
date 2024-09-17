@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLoZ ROMs</title>
+    <link rel="icon" type="image/png" href="tlozFavicon.png">
+    <style>
+    body {
+        color: white;
+        font-family: monospace, courier;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        background-color: rgba(0, 0, 0, 0.7);
+        text-align: center;
+        padding: 20px;
+    }
+
+    .playlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        justify-items: center;
+        justify-content: center;
+    }
+
+    .playlist {
+        background-color: rgba(0, 0, 0, 1);
+        padding: 15px;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        font-size: 16px;
+        background-color: #444;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #666;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin: 5px 0;
+    }
+
+    a {
+        font-size: 12px;
+        color: #00f;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+    .light-blue {
+      color: #00A36C;
+    }
+    </style>
+    <script>
+        // Check if the user is authenticated
+        if (sessionStorage.getItem("authenticated") !== "true") {
+            // Redirect to the password entry page
+            window.location.href = "password.html";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>The Legend of Zelda ROMs</h1>
+        <h2><br>NES ROMs</h2>
+        
+        <div class="playlist-grid">
+            <!-- Playlist 1 -->
+            <div class="playlist">
+                <h3>The Legend of Zelda</h3>
+                <button onclick="window.open('https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Legend%20of%20Zelda%2C%20The%20%28USA%29%20%28Rev%201%29.zip', '_blank')">Download Recommended ROM</button>
+                <ul id="playlist1" style="display: none;">
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Legend%20of%20Zelda%2C%20The%20%28USA%29.zip" target="_blank">Legend of Zelda, The (USA)</a></li>
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Legend%20of%20Zelda%2C%20The%20%28USA%29%20%28Rev%201%29.zip" target="_blank"><span class="light-blue">Legend of Zelda, The (USA) (Rev 1)</span></a></li>
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Legend%20of%20Zelda%2C%20The%20%28Europe%29.zip" target="_blank">Legend of Zelda, The (Europe)</a></li>
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Legend%20of%20Zelda%2C%20The%20%28Europe%29%20%28Rev%201%29.zip" target="_blank">Legend of Zelda, The (Europe) (Rev 1)</a></li>
+                </ul>
+                <button onclick="togglePlaylist('playlist1')">Show All Versions</button>
+            </div>
+
+            <!-- Playlist 2 -->
+            <div class="playlist">
+                <h3>Zelda II: <br>The Adventure of Link</h3>
+                <button onclick="window.open('https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Zelda%20II%20-%20The%20Adventure%20of%20Link%20%28Europe%29%20%28Rev%202%29.zip', '_blank')">Download Recommended ROM</button>
+                <ul id="playlist2" style="display: none;">
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Zelda%20II%20-%20The%20Adventure%20of%20Link%20%28USA%29.zip" target="_blank">Zelda II - The Adventure of Link (USA)</a></li>
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Zelda%20II%20-%20The%20Adventure%20of%20Link%20%28Europe%29.zip" target="_blank">Zelda II - The Adventure of Link (Europe)</a></li>
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Zelda%20II%20-%20The%20Adventure%20of%20Link%20%28Europe%29%20%28Rev%201%29.zip" target="_blank">Zelda II - The Adventure of Link (Europe) (Rev 1)</a></li>
+                    <li><a href="https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20%28Headered%29/Zelda%20II%20-%20The%20Adventure%20of%20Link%20%28Europe%29%20%28Rev%202%29.zip" target="_blank"><span class="light-blue">Zelda II - The Adventure of Link (Europe) (Rev 2)</span></a></li>
+                </ul>
+                <button onclick="togglePlaylist('playlist2')">Show All Versions</button>
+            </div>
+
+            <!-- Add more playlists as needed -->
+        </div>
+    </div>
+
+    <script>
+        function togglePlaylist(id) {
+            var playlist = document.getElementById(id);
+            playlist.style.display = (playlist.style.display === "none" || playlist.style.display === "") ? "block" : "none";
+        }
+    </script>
+</body>
+</html>
