@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Legend of Zelda</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Background overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Text container */
+        .text {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            z-index: 2;
+            max-width: 600px; /* Set a max width so the background is not too wide */
+            position: relative;
+        }
+        .text-2 {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block; /* Ensure the background only wraps around the content */
+            width: auto; /* Automatically size the background to fit the content */
+            margin-bottom: 10px; /* Add some space between text blocks */
+            z-index: 2;
+            text-align: bottom left;
+        }
+
+        /* h2 with link */
+        .h2-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .h2-container a {
+            margin-left: 10px;
+            color: #00f;
+            text-decoration: none;
+        }
+
+        .h2-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Flexbox container for layout */
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .flex-item {
+            flex: 1;
+            margin-right: 100px;
+        }
+
+        .flex-item:last-child {
+            margin-right: 0;
+        }
+    </style>
+   <script src="/scripts/passwordReturn.js"></script>
+</head>
+<body>
+    <div class="text" style="text-align: center; top: 0; left: 50%; transform: translateX(-50%);">
+        <h1>The Legend of Zelda</h1>
+        <h4><a href="/webretro">Emulator</a></h4>
+    </div>
+    <br>
+    <br>
+
+    <!-- Flexbox container for layout -->
+    <div class="flex-container">
+        <div class="flex-item">
+            <div class="text">
+                <div class="h2-container">
+                    <h2>NES</h2>
+                </div>
+                <div class="text">
+                    <a href="" target="_blank"></a>
+            </div>
+            </div>
+            <br>
+
+            
+            <div class="text">
+                <div class="h2-container">
+                    <h2>Game Boy (Color)</h2>
+                </div>
+                <div class="text">
+                    <a href="" target="_blank"></a>
+            </div>
+            </div>
+            <br>
+        </div>
+        
+        <div class="flex-item">
+            <div class="text">
+                <div class="h2-container">
+                    <h2>SNES</h2>
+                </div>
+                <div class="text">
+                    <a href="" target="_blank"></a>
+            </div>
+            </div>
+            <br>
+
+            <!-- Other Games -->
+            <div class="text">
+                <div class="h2-container">
+                    <h2>Game Boy Advance</h2>
+                </div>
+                <div class="text">
+                    <a href="" target="_blank"></a>
+            </div>
+            </div>
+            <br>
+        </div>
+
+        <!-- Flash Games -->
+        <div class="flex-item">
+            <div class="text">
+                <div class="h2-container">
+                    <h2>N64</h2>
+                </div>
+                <div class="text">
+                    <a href="" target="_blank"></a>
+            </div>
+            </div>
+            <br>
+
+            <!-- Other Games -->
+            <div class="text">
+                <div class="h2-container">
+                    <h2>DS</h2>
+                </div>
+                <div class="text">
+                    <a href="" target="_blank"></a>
+            </div>
+            </div>
+            <br>
+        </div>
+            </div>
+
+    <script src="/scripts/rbg.js"></script>
+    
+    <footer>
+        <div class="text-2">
+            <a href="/index">Back to Homepage</a>
+        </div>
+    </footer>
+</body>
+</html>
