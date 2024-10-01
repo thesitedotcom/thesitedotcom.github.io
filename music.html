@@ -490,6 +490,28 @@
         Your browser does not support the audio element.
     </audio>
 </div>
+<div class="text">
+<h2>Personal Playlists</h2>
+</div>
+<h2></h2>
+<h2></h2>
+    <!-- Playlist 1 -->
+    <div class="playlist-container">
+    <h2>Austin</h2>
+    <button class="collapsible">Show Playlist</button>
+    <div class="content">
+        <ul class="playlist" id="playlist01">
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer01', 'song1.mp3', 'Song 1')">Song 1</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer01', 'song2.mp3', 'Song 2')">Song 2</a></li>
+            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer01', 'song3.mp3', 'Song 3')">Song 3</a></li>
+        </ul>
+    </div>
+    <button onclick="shufflePlaylist('playlist01', 'audioPlayer01')">Shuffle All</button>
+    <div class="currently-playing">Currently Playing: <span id="currentSong01"></span></div>
+    <audio id="audioPlayer01" controls>
+        Your browser does not support the audio element.
+    </audio>
+</div>
     <script src="scripts/rbg.js"></script>
     <footer>
     <div class="text-2">
