@@ -495,20 +495,16 @@
 </div>
 <h2></h2>
 <h2></h2>
-    <!-- Playlist 1 -->
     <div class="playlist-container">
-    <h2>Mommy ASMR</h2>
-    <button class="collapsible">Show Playlist</button>
-    <div class="content">
-        <ul class="playlist" id="playlist13">
-            <li><a href="javascript:void(0);" onclick="playAudio('audioPlayer13', 'https://drive.google.com/uc?id=1DXucbjwPTjKnc4cSX7aw7G3KuMLdGRpW', 'Song 1')">Mommy ASMR</a></li>
-        </ul>
-    </div>
-    <button onclick="shufflePlaylist('playlist13', 'audioPlayer13')">Shuffle All</button>
-    <div class="currently-playing">Currently Playing: <span id="currentSong13"></span></div>
-    <audio id="audioPlayer13" controls>
-        Your browser does not support the audio element.
-    </audio>
+  <h2>Mommy ASMR</h2>
+  <iframe 
+    id="videoPlayer" 
+    width="853" 
+    height="480" 
+    frameborder="0" 
+    allowfullscreen
+    src="https://drive.google.com/file/d/1DXucbjwPTjKnc4cSX7aw7G3KuMLdGRpW/preview">
+  </iframe>
 </div>
     <script src="scripts/rbg.js"></script>
     <footer>
