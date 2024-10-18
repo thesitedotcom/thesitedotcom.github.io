@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#chat-container {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#messages {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+#message-input {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+#send-button {
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #3e8e41;
+}
