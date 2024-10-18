@@ -8,6 +8,7 @@ const chatContainer = document.getElementById('chat-container');
 const messagesContainer = document.getElementById('messages');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
+// ...
 
 // Listen for new messages
 supabase.from('messages').on('INSERT', (payload) => {
@@ -20,36 +21,48 @@ supabase.from('messages').on('INSERT', (payload) => {
     `;
     messagesContainer.innerHTML += messageHTML;
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    console.log('New message received'); 
+    const debugMessage = document.createElement('div');
+    debugMessage.textContent = 'New message received';
+    chatContainer.appendChild(debugMessage); 
 });
 
 // Send message
 sendButton.addEventListener('click', async () => {
-    const text = messageInput.value.trim();
-    if (text) {
-        const { data, error } = await supabase.from('messages').insert([
-            {
-                username: 'Anonymous', // Replace with actual username
-                text,
-            },
-        ]);
-        if (error) console.error(error);
-        messageInput.value = '';
+    // ...
+    if (error) {
+        const errorMessage = document.createElement('div');
+        errorMessage.textContent = 'Error: ' + error.message;
+        chatContainer.appendChild(errorMessage); 
+    } else {
+        const successMessage = document.createElement('div');
+        successMessage.textContent = 'Message sent successfully';
+        chatContainer.appendChild(successMessage); 
     }
 });
 
 // Initialize chat
 async function initChat() {
     const { data, error } = await supabase.from('messages').select('*');
-    if (error) console.error(error);
-    data.forEach((message) => {
-        const messageHTML = `
-            <div class="message">
-                <span class="username">${message.username}</span>
-                <span class="message-text">${message.text}</span>
-            </div>
-        `;
-        messagesContainer.innerHTML += messageHTML;
-    });
+    if (error) {
+        const errorMessage = document.createElement('div');
+        errorMessage.textContent = 'Error: ' + error.message;
+        chatContainer.appendChild(errorMessage); 
+    } else {
+        data.forEach((message) => {
+            const messageHTML = `
+                <div class="message">
+                    <span class="username">${message.username}</span>
+                    <span class="message-text">${message.text}</span>
+                </div>
+            `;
+            messagesContainer.innerHTML += messageHTML;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            const debugMessage = document.createElement('div');
+            debugMessage.textContent = 'Message displayed';
+            chatContainer.appendChild(debugMessage); 
+        });
+    }
 }
 
 initChat();
