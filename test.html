@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Key Redirect</title>
+    <script>
+        // Function to handle the keydown event
+        function handleKeyDown(event) {
+            // Check if the pressed key is Escape
+            if (event.key === "Escape") {
+                // Open a new URL in a new window
+                window.open("https://classroom.google.com/?authuser=0", "_blank");
+                // Close the current window
+                window.close();
+            }
+        }
+
+        // Add event listener for keydown event
+        document.addEventListener("keydown", handleKeyDown);
+    </script>
+</head>
+<body>
+    <h1>Press Escape to Close and Redirect</h1>
+    <p>Try pressing the Escape key to see what happens!</p>
+</body>
+</html>
