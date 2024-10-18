@@ -8,18 +8,6 @@ const chatContainer = document.getElementById('chat-container');
 const messagesContainer = document.getElementById('messages');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
-// ...
-
-// Listen for new messagesconst supabaseUrl = 'https://your-supabase-url.supabase.co';
-const supabaseKey = 'your-supabase-key';
-const supabaseSecret = 'your-supabase-secret';
-
-const supabase = createClient(supabaseUrl, supabaseKey, supabaseSecret);
-
-const chatContainer = document.getElementById('chat-container');
-const messagesContainer = document.getElementById('messages');
-const messageInput = document.getElementById('message-input');
-const sendButton = document.getElementById('send-button');
 const errorContainer = document.getElementById('error-container');
 
 // Listen for new messages
