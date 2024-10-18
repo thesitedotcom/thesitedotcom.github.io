@@ -10,6 +10,18 @@ const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 // ...
 
+// Listen for new messagesconst supabaseUrl = 'https://your-supabase-url.supabase.co';
+const supabaseKey = 'your-supabase-key';
+const supabaseSecret = 'your-supabase-secret';
+
+const supabase = createClient(supabaseUrl, supabaseKey, supabaseSecret);
+
+const chatContainer = document.getElementById('chat-container');
+const messagesContainer = document.getElementById('messages');
+const messageInput = document.getElementById('message-input');
+const sendButton = document.getElementById('send-button');
+const errorContainer = document.getElementById('error-container');
+
 // Listen for new messages
 supabase.from('messages').on('INSERT', (payload) => {
     const message = payload.new;
@@ -29,39 +41,60 @@ supabase.from('messages').on('INSERT', (payload) => {
 
 // Send message
 sendButton.addEventListener('click', async () => {
-    // ...
-    if (error) {
-        const errorMessage = document.createElement('div');
-        errorMessage.textContent = 'Error: ' + error.message;
-        chatContainer.appendChild(errorMessage); 
-    } else {
-        const successMessage = document.createElement('div');
-        successMessage.textContent = 'Message sent successfully';
-        chatContainer.appendChild(successMessage); 
+    const text = messageInput.value.trim();
+    if (text) {
+        try {
+            const { data, error } = await supabase.from('messages').insert([
+                {
+                    username: 'Anonymous', 
+                    text,
+                },
+            ]);
+            if (error) {
+                const errorMessage = document.createElement('div');
+                errorMessage.textContent = 'Error: ' + error.message;
+                errorContainer.appendChild(errorMessage);
+            } else {
+                const successMessage = document.createElement('div');
+                successMessage.textContent = 'Message sent successfully';
+                errorContainer.appendChild(successMessage);
+                messageInput.value = '';
+            }
+        } catch (error) {
+            const errorMessage = document.createElement('div');
+            errorMessage.textContent = 'Error: ' + error.message;
+            errorContainer.appendChild(errorMessage);
+        }
     }
 });
 
 // Initialize chat
 async function initChat() {
-    const { data, error } = await supabase.from('messages').select('*');
-    if (error) {
+    try {
+        const { data, error } = await supabase.from('messages').select('*');
+        if (error) {
+            const errorMessage = document.createElement('div');
+            errorMessage.textContent = 'Error: ' + error.message;
+            errorContainer.appendChild(errorMessage);
+        } else {
+            data.forEach((message) => {
+                const messageHTML = `
+                    <div class="message">
+                        <span class="username">${message.username}</span>
+                        <span class="message-text">${message.text}</span>
+                    </div>
+                `;
+                messagesContainer.innerHTML += messageHTML;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                const debugMessage = document.createElement('div');
+                debugMessage.textContent = 'Message displayed';
+                chatContainer.appendChild(debugMessage); 
+            });
+        }
+    } catch (error) {
         const errorMessage = document.createElement('div');
         errorMessage.textContent = 'Error: ' + error.message;
-        chatContainer.appendChild(errorMessage); 
-    } else {
-        data.forEach((message) => {
-            const messageHTML = `
-                <div class="message">
-                    <span class="username">${message.username}</span>
-                    <span class="message-text">${message.text}</span>
-                </div>
-            `;
-            messagesContainer.innerHTML += messageHTML;
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            const debugMessage = document.createElement('div');
-            debugMessage.textContent = 'Message displayed';
-            chatContainer.appendChild(debugMessage); 
-        });
+        errorContainer.appendChild(errorMessage);
     }
 }
 
