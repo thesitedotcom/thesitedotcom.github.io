@@ -1,6 +1,6 @@
-const supabaseUrl = 'https://your-supabase-url.supabase.co';
-const supabaseKey = 'your-supabase-key';
-const supabaseSecret = 'your-supabase-secret';
+const supabaseUrl = 'https://zmwzcrqiwcengzbjfopr.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inptd3pjcnFpd2Nlbmd6Ympmb3ByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkxOTE3NzAsImV4cCI6MjA0NDc2Nzc3MH0.GL_XkNteUY9tAB5DJ26nnvZq34-gBz3zGPAibB4PnLk';
+const supabaseSecret = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inptd3pjcnFpd2Nlbmd6Ympmb3ByIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTE5MTc3MCwiZXhwIjoyMDQ0NzY3NzcwfQ.8hYs6XE3A6swCkp6xItcUuXRJpGrcFAeDH8f-uKzwLo';
 
 const supabase = createClient(supabaseUrl, supabaseKey, supabaseSecret);
 
