@@ -38,3 +38,16 @@ body {
 #send-button:hover {
     background-color: #3e8e41;
 }
+/* Add some basic styling */
+.message {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.message-text {
+    color: #666;
+}
