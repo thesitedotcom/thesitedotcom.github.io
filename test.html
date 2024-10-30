@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Playlist Audio Player</title>
+    <style>
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+
+        audio {
+            display: none; /* Initially hide the audio player */
+        }
+    </style>
+</head>
+<body>
+
+<h2>My Audio Playlist</h2>
+
+<button class="collapsible">Show Playlist</button>
+<div class="content">
+    <ul id="playlist">
+        <li><a href="#" onclick="playAudio('audioPlayer', 'song1.mp3')">Song 1</a></li>
+        <li><a href="#" onclick="playAudio('audioPlayer', 'song2.mp3')">Song 2</a></li>
+        <li><a href="#" onclick="playAudio('audioPlayer', 'song3.mp3')">Song 3</a></li>
+    </ul>
+</div>
+
+<audio id="audioPlayer"></audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+
+        var audioPlayer = document.getElementById("audioPlayer");
+        audioPlayer.addEventListener("ended", function() {
+            audioPlayer.style.display = "none";
+        });
+    });
+
+    function playAudio(playerId, file) {
+        var audioPlayer = document.getElementById(playerId);
+        audioPlayer.src = file;
+        audioPlayer.style.display = "block"; // Show the audio player
+        audioPlayer.play();
+    }
+</script>
+
+</body>
+</html>
