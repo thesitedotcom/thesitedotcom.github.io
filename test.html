@@ -5,61 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Single Playlist Audio Player</title>
     <style>
-        .collapsible {
-            cursor: pointer;
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #nowPlaying {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f0f0f0;
             padding: 10px;
-            background-color: #f1f1f1;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 15px;
+            border: 1px solid #ccc;
         }
-
-        .active, .collapsible:hover {
-            background-color: #ccc;
+        #playlist {
+            list-style-type: none;
+            padding: 0;
         }
-
-        .content {
-            display: none;
-            padding: 0 18px;
-            overflow: hidden;
-            background-color: #f9f9f9;
-        }
-
-        audio {
-            display: none;
+        #playlist li {
+            cursor: pointer;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
 
-<h2>My Playlist</h2>
-<button class="collapsible">Show Playlist</button>
-<div class="content">
-    <ul id="playlist">
-        <li><a href="#" onclick="playAudio('audioPlayer', 'song1.mp3')">Song 1</a></li>
-        <li><a href="#" onclick="playAudio('audioPlayer', 'song2.mp3')">Song 2</a></li>
-        <li><a href="#" onclick="playAudio('audioPlayer', 'song3.mp3')">Song 3</a></li>
-    </ul>
-    <button onclick="shufflePlaylist('playlist', 'audioPlayer')">Shuffle Playlist</button>
-</div>
+<div id="nowPlaying">Now Playing: None</div>
 
-<audio id="audioPlayer"></audio>
+<button id="shuffleButton">Shuffle Playlist</button>
+
+<ul id="playlist">
+    <li onclick="playAudio('audioPlayer', 'song1.mp3')">Song 1</li>
+    <li onclick="playAudio('audioPlayer', 'song2.mp3')">Song 2</li>
+    <li onclick="playAudio('audioPlayer', 'song3.mp3')">Song 3</li>
+</ul>
+
+<audio id="audioPlayer" style="display:none;"></audio>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var coll = document.getElementsByClassName("collapsible");
-        for (var i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                content.style.display = content.style.display === "block" ? "none" : "block";
-            });
-        }
-
         var audioPlayer = document.getElementById('audioPlayer');
-        audioPlayer.addEventListener("ended", function() {
-            audioPlayer.style.display = "none";
+
+        audioPlayer.onended = function() {
+            document.getElementById('nowPlaying').innerText = "Now Playing: None";
+        };
+
+        document.getElementById('shuffleButton').addEventListener('click', function() {
+            shufflePlaylist('playlist', 'audioPlayer');
         });
     });
 
@@ -68,14 +58,14 @@
         audioPlayer.src = file;
         audioPlayer.style.display = "block"; // Show the audio player
         audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + file;
     }
 
     function shufflePlaylist(playlistId, playerId) {
         var playlist = document.getElementById(playlistId);
-        var songs = playlist.getElementsByTagName('li');
-        var songArray = Array.from(songs);
-        shuffleArray(songArray);
-        playShuffledSongs(songArray, playerId);
+        var songs = Array.from(playlist.getElementsByTagName('li'));
+        shuffleArray(songs);
+        playShuffledSongs(songs, playerId);
     }
 
     function shuffleArray(array) {
@@ -92,16 +82,19 @@
         var currentIndex = 0;
 
         audioPlayer.style.display = "block";
-        audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
+        audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
         audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
 
         audioPlayer.onended = function() {
             currentIndex++;
             if (currentIndex < songs.length) {
-                audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
+                audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
                 audioPlayer.play();
+                document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
             } else {
                 audioPlayer.style.display = "none"; // Hide the audio player when all songs are finished
+                document.getElementById('nowPlaying').innerText = "Now Playing: None";
             }
         };
     }
