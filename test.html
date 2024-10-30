@@ -1,3 +1,11 @@
+# Single Playlist Audio Player with Shuffle and Now Playing Section
+
+## Requirement Summary
+This document outlines the implementation of a single playlist audio player in HTML and JavaScript. The player includes a shuffle button, a "Now Playing" section in the top right corner, and two images in the middle. The top image will spin when a song is playing and remain still otherwise.
+
+## Code Generated
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,36 +15,48 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
         }
         #nowPlaying {
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: #f0f0f0;
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 10px;
-            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        #playlist {
-            list-style-type: none;
-            padding: 0;
+        #imageContainer {
+            margin: 20px 0;
         }
-        #playlist li {
-            cursor: pointer;
-            margin: 5px 0;
+        #topImage {
+            width: 200px;
+            transition: transform 0.5s;
+        }
+        #topImage.spinning {
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-<div id="nowPlaying">Now Playing: None</div>
+<div id="nowPlaying">Now Playing: <span id="currentSong">None</span></div>
 
-<button id="shuffleButton">Shuffle Playlist</button>
+<div id="imageContainer">
+    <img id="topImage" src="Blake.png" alt="Top Image">
+    <img id="bottomImage" src="record-player-blake.png" alt="Bottom Image">
+</div>
 
 <ul id="playlist">
-    <li onclick="playAudio('audioPlayer', 'song1.mp3')">Song 1</li>
-    <li onclick="playAudio('audioPlayer', 'song2.mp3')">Song 2</li>
-    <li onclick="playAudio('audioPlayer', 'song3.mp3')">Song 3</li>
+    <li><a href="#" onclick="playAudio('song 1', 'song1.mp3'); return false;">Song 1</a></li>
+    <li><a href="#" onclick="playAudio('song 2', 'song2.mp3'); return false;">Song 2</a></li>
+    <li><a href="#" onclick="playAudio('song 3', 'song3.mp3'); return false;">Song 3</a></li>
 </ul>
+
+<button onclick="shufflePlaylist('playlist', 'audioPlayer')">Shuffle</button>
 
 <audio id="audioPlayer" style="display:none;"></audio>
 
@@ -44,13 +64,18 @@
     document.addEventListener("DOMContentLoaded", function() {
         var audioPlayer = document.getElementById('audioPlayer');
 
-        audioPlayer.onended = function() {
-            document.getElementById('nowPlaying').innerText = "Now Playing: None";
+        audioPlayer.onplay = function() {
+            document.getElementById('topImage').classList.add('spinning');
         };
 
-        document.getElementById('shuffleButton').addEventListener('click', function() {
-            shufflePlaylist('playlist', 'audioPlayer');
-        });
+        audioPlayer.onpause = function() {
+            document.getElementById('topImage').classList.remove('spinning');
+        };
+
+        audioPlayer.onended = function() {
+            document.getElementById('topImage').classList.remove('spinning');
+            document.getElementById('currentSong').textContent = 'None';
+        };
     });
 
     function playAudio(playerId, file) {
@@ -58,14 +83,22 @@
         audioPlayer.src = file;
         audioPlayer.style.display = "block"; // Show the audio player
         audioPlayer.play();
-        document.getElementById('nowPlaying').innerText = "Now Playing: " + file;
+        document.getElementById('currentSong').textContent = file.split('/').pop(); // Update now playing
+
+        // Hide the audio player when the music stops playing
+        audioPlayer.onended = function() {
+            audioPlayer.style.display = "none";
+            document.getElementById('currentSong').textContent = 'None';
+        };
     }
 
     function shufflePlaylist(playlistId, playerId) {
         var playlist = document.getElementById(playlistId);
-        var songs = Array.from(playlist.getElementsByTagName('li'));
-        shuffleArray(songs);
-        playShuffledSongs(songs, playerId);
+        var songs = playlist.getElementsByTagName('li');
+        var songArray = Array.from(songs);
+        shuffleArray(songArray);
+
+        playShuffledSongs(songArray, playerId);
     }
 
     function shuffleArray(array) {
@@ -81,20 +114,25 @@
         var audioPlayer = document.getElementById(playerId);
         var currentIndex = 0;
 
+        // Show the audio player before playing the first song
         audioPlayer.style.display = "block";
-        audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
+
+        audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
         audioPlayer.play();
-        document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
+        document.getElementById('currentSong').textContent = audioPlayer.src.split('/').pop(); // Update now playing
 
         audioPlayer.onended = function() {
             currentIndex++;
             if (currentIndex < songs.length) {
-                audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
+                // Show the audio player before playing the next song
+                audioPlayer.style.display = "block";
+                
+                audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
                 audioPlayer.play();
-                document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
+                document.getElementById('currentSong').textContent = audioPlayer.src.split('/').pop(); // Update now playing
             } else {
                 audioPlayer.style.display = "none"; // Hide the audio player when all songs are finished
-                document.getElementById('nowPlaying').innerText = "Now Playing: None";
+                document.getElementById('currentSong').textContent = 'None';
             }
         };
     }
