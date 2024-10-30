@@ -6,11 +6,9 @@
     <title>Single Playlist Audio Player</title>
     <style>
         .collapsible {
-            background-color: #777;
-            color: white;
             cursor: pointer;
             padding: 10px;
-            width: 100%;
+            background-color: #f1f1f1;
             border: none;
             text-align: left;
             outline: none;
@@ -18,25 +16,24 @@
         }
 
         .active, .collapsible:hover {
-            background-color: #555;
+            background-color: #ccc;
         }
 
         .content {
-            padding: 0 18px;
             display: none;
+            padding: 0 18px;
             overflow: hidden;
-            background-color: #f1f1f1;
+            background-color: #f9f9f9;
         }
 
         audio {
-            display: none; /* Initially hide the audio player */
+            display: none;
         }
     </style>
 </head>
 <body>
 
-<h2>My Audio Playlist</h2>
-
+<h2>My Playlist</h2>
 <button class="collapsible">Show Playlist</button>
 <div class="content">
     <ul id="playlist">
@@ -44,6 +41,7 @@
         <li><a href="#" onclick="playAudio('audioPlayer', 'song2.mp3')">Song 2</a></li>
         <li><a href="#" onclick="playAudio('audioPlayer', 'song3.mp3')">Song 3</a></li>
     </ul>
+    <button onclick="shufflePlaylist('playlist', 'audioPlayer')">Shuffle Playlist</button>
 </div>
 
 <audio id="audioPlayer"></audio>
@@ -55,15 +53,11 @@
             coll[i].addEventListener("click", function() {
                 this.classList.toggle("active");
                 var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
+                content.style.display = content.style.display === "block" ? "none" : "block";
             });
         }
 
-        var audioPlayer = document.getElementById("audioPlayer");
+        var audioPlayer = document.getElementById('audioPlayer');
         audioPlayer.addEventListener("ended", function() {
             audioPlayer.style.display = "none";
         });
@@ -74,6 +68,42 @@
         audioPlayer.src = file;
         audioPlayer.style.display = "block"; // Show the audio player
         audioPlayer.play();
+    }
+
+    function shufflePlaylist(playlistId, playerId) {
+        var playlist = document.getElementById(playlistId);
+        var songs = playlist.getElementsByTagName('li');
+        var songArray = Array.from(songs);
+        shuffleArray(songArray);
+        playShuffledSongs(songArray, playerId);
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function playShuffledSongs(songs, playerId) {
+        if (songs.length === 0) return;
+
+        var audioPlayer = document.getElementById(playerId);
+        var currentIndex = 0;
+
+        audioPlayer.style.display = "block";
+        audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
+        audioPlayer.play();
+
+        audioPlayer.onended = function() {
+            currentIndex++;
+            if (currentIndex < songs.length) {
+                audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
+                audioPlayer.play();
+            } else {
+                audioPlayer.style.display = "none"; // Hide the audio player when all songs are finished
+            }
+        };
     }
 </script>
 
