@@ -1,11 +1,3 @@
-# Single Playlist Audio Player with Shuffle and Now Playing Section
-
-## Requirement Summary
-This document outlines the implementation of a single playlist audio player in HTML and JavaScript. The player includes a shuffle button, a "Now Playing" section in the top right corner, and two images in the center, where the top image spins when a song is playing. 
-
-## Code Generated
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,73 +7,50 @@ This document outlines the implementation of a single playlist audio player in H
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
         }
         #nowPlaying {
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: #f0f0f0;
             padding: 10px;
-            border-radius: 5px;
+            border: 1px solid #ccc;
         }
-        #imageContainer {
-            position: relative;
-            margin: 20px auto;
-            width: 200px;
-            height: 200px;
+        #playlist {
+            list-style-type: none;
+            padding: 0;
         }
-        #topImage {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            animation: spin 0.5s linear infinite;
-            display: none; /* Initially hidden */
-        }
-        #bottomImage {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        #playlist li {
+            cursor: pointer;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
 
-<div id="nowPlaying">Now Playing: <span id="currentSong">None</span></div>
+<div id="nowPlaying">Now Playing: None</div>
 
-<div id="imageContainer">
-    <img id="topImage" src="Blake.png" alt="Top Image">
-    <img id="bottomImage" src="record-player-blake.png" alt="Bottom Image">
-</div>
+<button id="shuffleButton">Shuffle Playlist</button>
 
 <ul id="playlist">
-    <li><a href="#" onclick="playAudio('song1', 'song1.mp3'); return false;">Song 1</a></li>
-    <li><a href="#" onclick="playAudio('song2', 'song2.mp3'); return false;">Song 2</a></li>
-    <li><a href="#" onclick="playAudio('song3', 'song3.mp3'); return false;">Song 3</a></li>
+    <li onclick="playAudio('song1', 'song1.mp3')">Song 1</li>
+    <li onclick="playAudio('song2', 'song2.mp3')">Song 2</li>
+    <li onclick="playAudio('song3', 'song3.mp3')">Song 3</li>
 </ul>
-
-<button onclick="shufflePlaylist('playlist', 'audioPlayer')">Shuffle</button>
 
 <audio id="audioPlayer" style="display:none;"></audio>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var audioPlayer = document.getElementById('audioPlayer');
-        audioPlayer.onplay = function() {
-            document.getElementById('topImage').style.display = 'block'; // Show spinning image
-            document.getElementById('currentSong').innerText = audioPlayer.src.split('/').pop(); // Update now playing
-        };
-        audioPlayer.onpause = function() {
-            document.getElementById('topImage').style.display = 'none'; // Hide spinning image
-        };
+
         audioPlayer.onended = function() {
-            document.getElementById('topImage').style.display = 'none'; // Hide spinning image
-            document.getElementById('currentSong').innerText = 'None'; // Reset now playing
+            document.getElementById('nowPlaying').innerText = "Now Playing: None";
         };
+
+        document.getElementById('shuffleButton').addEventListener('click', function() {
+            shufflePlaylist('playlist', 'audioPlayer');
+        });
     });
 
     function playAudio(playerId, file) {
@@ -89,14 +58,14 @@ This document outlines the implementation of a single playlist audio player in H
         audioPlayer.src = file;
         audioPlayer.style.display = "block"; // Show the audio player
         audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + file;
     }
 
     function shufflePlaylist(playlistId, playerId) {
         var playlist = document.getElementById(playlistId);
-        var songs = playlist.getElementsByTagName('li');
-        var songArray = Array.from(songs);
-        shuffleArray(songArray);
-        playShuffledSongs(songArray, playerId);
+        var songs = Array.from(playlist.getElementsByTagName('li'));
+        shuffleArray(songs);
+        playShuffledSongs(songs, playerId);
     }
 
     function shuffleArray(array) {
@@ -112,16 +81,20 @@ This document outlines the implementation of a single playlist audio player in H
         var audioPlayer = document.getElementById(playerId);
         var currentIndex = 0;
 
-        audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
+        audioPlayer.style.display = "block";
+        audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
         audioPlayer.play();
-        
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
+
         audioPlayer.onended = function() {
             currentIndex++;
             if (currentIndex < songs.length) {
-                audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
+                audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
                 audioPlayer.play();
+                document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
             } else {
                 audioPlayer.style.display = "none"; // Hide the audio player when all songs are finished
+                document.getElementById('nowPlaying').innerText = "Now Playing: None";
             }
         };
     }
