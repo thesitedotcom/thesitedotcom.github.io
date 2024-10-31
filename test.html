@@ -1,3 +1,11 @@
+# Single Playlist Audio Player with Shuffle and Now Playing Section
+
+## Requirement Summary
+This document outlines the implementation of a single playlist audio player in HTML and JavaScript. The player includes a shuffle button, a "Now Playing" section in the top right corner, and two images in the center, where the top image spins when a song is playing. 
+
+## Code Generated
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,14 +26,22 @@
             border-radius: 5px;
         }
         #imageContainer {
-            margin: 20px 0;
+            position: relative;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
         }
         #topImage {
-            width: 200px;
-            transition: transform 0.5s;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: spin 0.5s linear infinite;
+            display: none; /* Initially hidden */
         }
-        #topImage.spinning {
-            animation: spin 1s infinite linear;
+        #bottomImage {
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
         @keyframes spin {
             from { transform: rotate(0deg); }
@@ -43,9 +59,9 @@
 </div>
 
 <ul id="playlist">
-    <li><a href="#" onclick="playAudio('song 1', 'song1.mp3'); return false;">Song 1</a></li>
-    <li><a href="#" onclick="playAudio('song 2', 'song2.mp3'); return false;">Song 2</a></li>
-    <li><a href="#" onclick="playAudio('song 3', 'song3.mp3'); return false;">Song 3</a></li>
+    <li><a href="#" onclick="playAudio('song1', 'song1.mp3'); return false;">Song 1</a></li>
+    <li><a href="#" onclick="playAudio('song2', 'song2.mp3'); return false;">Song 2</a></li>
+    <li><a href="#" onclick="playAudio('song3', 'song3.mp3'); return false;">Song 3</a></li>
 </ul>
 
 <button onclick="shufflePlaylist('playlist', 'audioPlayer')">Shuffle</button>
@@ -55,18 +71,16 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var audioPlayer = document.getElementById('audioPlayer');
-
         audioPlayer.onplay = function() {
-            document.getElementById('topImage').classList.add('spinning');
+            document.getElementById('topImage').style.display = 'block'; // Show spinning image
+            document.getElementById('currentSong').innerText = audioPlayer.src.split('/').pop(); // Update now playing
         };
-
         audioPlayer.onpause = function() {
-            document.getElementById('topImage').classList.remove('spinning');
+            document.getElementById('topImage').style.display = 'none'; // Hide spinning image
         };
-
         audioPlayer.onended = function() {
-            document.getElementById('topImage').classList.remove('spinning');
-            document.getElementById('currentSong').textContent = 'None';
+            document.getElementById('topImage').style.display = 'none'; // Hide spinning image
+            document.getElementById('currentSong').innerText = 'None'; // Reset now playing
         };
     });
 
@@ -75,13 +89,6 @@
         audioPlayer.src = file;
         audioPlayer.style.display = "block"; // Show the audio player
         audioPlayer.play();
-        document.getElementById('currentSong').textContent = file.split('/').pop(); // Update now playing
-
-        // Hide the audio player when the music stops playing
-        audioPlayer.onended = function() {
-            audioPlayer.style.display = "none";
-            document.getElementById('currentSong').textContent = 'None';
-        };
     }
 
     function shufflePlaylist(playlistId, playerId) {
@@ -89,7 +96,6 @@
         var songs = playlist.getElementsByTagName('li');
         var songArray = Array.from(songs);
         shuffleArray(songArray);
-
         playShuffledSongs(songArray, playerId);
     }
 
@@ -106,25 +112,16 @@
         var audioPlayer = document.getElementById(playerId);
         var currentIndex = 0;
 
-        // Show the audio player before playing the first song
-        audioPlayer.style.display = "block";
-
         audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
         audioPlayer.play();
-        document.getElementById('currentSong').textContent = audioPlayer.src.split('/').pop(); // Update now playing
-
+        
         audioPlayer.onended = function() {
             currentIndex++;
             if (currentIndex < songs.length) {
-                // Show the audio player before playing the next song
-                audioPlayer.style.display = "block";
-                
                 audioPlayer.src = songs[currentIndex].querySelector('a').getAttribute('onclick').match(/'([^']+)'/g)[1].replace(/'/g, '');
                 audioPlayer.play();
-                document.getElementById('currentSong').textContent = audioPlayer.src.split('/').pop(); // Update now playing
             } else {
                 audioPlayer.style.display = "none"; // Hide the audio player when all songs are finished
-                document.getElementById('currentSong').textContent = 'None';
             }
         };
     }
