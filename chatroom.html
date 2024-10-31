@@ -44,18 +44,23 @@
   firebase.auth().signInAnonymously()
     .catch(error => console.error("Error with authentication:", error));
 
-  function sendMessage() {
+function sendMessage() {
     const message = document.getElementById("messageInput").value;
     if (message.trim()) {
-      const timestamp = new Date().toLocaleTimeString();
-      db.ref("messages").push({
-        user: userName,
-        text: message,
-        time: timestamp
-      });
-      document.getElementById("messageInput").value = '';
+        const timestamp = new Date().toLocaleTimeString();
+        db.ref("messages").push({
+            user: userName,
+            text: message,
+            time: timestamp
+        }).then(() => {
+            alert("Message sent! Check Firebase Console.");
+        }).catch(error => {
+            alert("Error sending message: " + error.message);
+        });
+        document.getElementById("messageInput").value = '';
     }
-  }
+}
+
 
   db.ref("messages").on("child_added", snapshot => {
     const msg = snapshot.val();
