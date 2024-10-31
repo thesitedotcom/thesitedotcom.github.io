@@ -29,11 +29,18 @@
             margin: 5px 0;
         }
         #images {
-            display: flex;
+            position: relative;
         }
         #record {
+            position: absolute;
+            top: 0;
+            left: 0;
             animation: spin 3s linear infinite;
             display: none;
+        }
+        #static-record {
+            width: 100px;
+            height: 100px;
         }
         @keyframes spin {
             0% {
@@ -52,14 +59,14 @@
 <button id="shuffleButton">Shuffle Playlist</button>
 
 <ul id="playlist">
-    <li onclick="playAudio('song1', 'song1.mp3')">Song 1</li>
-    <li onclick="playAudio('song2', 'song2.mp3')">Song 2</li>
-    <li onclick="playAudio('song3', 'song3.mp3')">Song 3</li>
+    <li onclick="playAudio('song1.mp3', 'Song 1')">Song 1</li>
+    <li onclick="playAudio('song2.mp3', 'Song 2')">Song 2</li>
+    <li onclick="playAudio('song3.mp3', 'Song 3')">Song 3</li>
 </ul>
 
 <div id="images">
-    <img id="record" src="Blake.png" width="100" height="100">
-    <img id="static-record" src="record-player-blake.png" width="100" height="100">
+    <img id="static-record" src="Blake.png" width="100" height="100">
+    <img id="record" src="record-player-blake.png" width="100" height="100">
 </div>
 
 <audio id="audioPlayer" style="display:none;"></audio>
@@ -78,14 +85,14 @@
         });
     });
 
-    function playAudio(playerId, file) {
-        var audioPlayer = document.getElementById(playerId);
-        audioPlayer.src = file;
-        audioPlayer.style.display = "block"; 
-        audioPlayer.play();
-        document.getElementById('nowPlaying').innerText = "Now Playing: " + file;
-        document.getElementById('record').style.display = "block";
-    }
+    function playAudio(file, songTitle) {
+    var audioPlayer = document.getElementById('audioPlayer');
+    audioPlayer.src = file;
+    audioPlayer.style.display = "block"; 
+    audioPlayer.play();
+    document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+    document.getElementById('record').style.display = "block";
+}
 
     function shufflePlaylist(playlistId, playerId) {
         var playlist = document.getElementById(playlistId);
@@ -102,30 +109,32 @@
     }
 
     function playShuffledSongs(songs, playerId) {
-        if (songs.length === 0) return;
+    if (songs.length === 0) return;
 
-        var audioPlayer = document.getElementById(playerId);
-        var currentIndex = 0;
+    var audioPlayer = document.getElementById(playerId);
+    var currentIndex = 0;
 
-        audioPlayer.style.display = "block";
-        audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
-        audioPlayer.play();
-        document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
-        document.getElementById('record').style.display = "block";
+    audioPlayer.style.display = "block";
+    audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
+    var songTitle = songs[currentIndex].textContent;
+    audioPlayer.play();
+    document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+    document.getElementById('record').style.display = "block";
 
-        audioPlayer.onended = function() {
-            currentIndex++;
-            if (currentIndex < songs.length) {
-                audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
-                audioPlayer.play();
-                document.getElementById('nowPlaying').innerText = "Now Playing: " + songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
-            } else {
-                audioPlayer.style.display = "none"; 
-                document.getElementById('nowPlaying').innerText = "Now Playing: None";
-                document.getElementById('record').style.display = "none";
-            }
-        };
-    }
+    audioPlayer.onended = function() {
+        currentIndex++;
+        if (currentIndex < songs.length) {
+            audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
+            songTitle = songs[currentIndex].textContent;
+            audioPlayer.play();
+            document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        } else {
+            audioPlayer.style.display = "none"; 
+            document.getElementById('nowPlaying').innerText = "Now Playing: None";
+            document.getElementById('record').style.display = "none";
+        }
+    };
+}
 </script>
 
 </body>
