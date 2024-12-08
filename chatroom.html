@@ -53,6 +53,7 @@
   // Retrieve Username from Session Storage
   let userName = sessionStorage.getItem("userName") || "Anonymous";
 
+  // Define the sendMessage function
   function sendMessage() {
     const message = document.getElementById("messageInput").value;
     if (message.trim()) {
@@ -62,14 +63,20 @@
         text: message,
         time: timestamp
       });
-      document.getElementById("messageInput").value = '';
+      document.getElementById("messageInput").value = ''; // Clear the input
     }
   }
 
+  // Listen for new messages in the database
   db.ref("messages").on("child_added", snapshot => {
     const msg = snapshot.val();
     const msgDiv = document.createElement("div");
     msgDiv.classList.add("message");
     msgDiv.innerHTML = `<strong>${msg.user}</strong>: ${msg.text} <span class="timestamp">(${msg.time})</span>`;
     document.getElementById("messages").appendChild(msgDiv);
-  
+    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+  });
+</script>
+
+</body>
+</html>
