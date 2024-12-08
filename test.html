@@ -11,6 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
         #nowPlaying {
             position: absolute;
@@ -23,6 +24,7 @@
         #playlist {
             list-style-type: none;
             padding: 0;
+            margin-top: 50px;
         }
         #playlist li {
             cursor: pointer;
@@ -30,6 +32,7 @@
         }
         #images {
             position: relative;
+            margin-top: 20px;
         }
         #record {
             position: absolute;
@@ -50,6 +53,19 @@
                 transform: rotate(360deg);
             }
         }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #666;
+        }
     </style>
 </head>
 <body>
@@ -59,9 +75,9 @@
 <button id="shuffleButton">Shuffle Playlist</button>
 
 <ul id="playlist">
-    <li onclick="playAudio('song1.mp3', 'Song 1')">Song 1</li>
-    <li onclick="playAudio('song2.mp3', 'Song 2')">Song 2</li>
-    <li onclick="playAudio('song3.mp3', 'Song 3')">Song 3</li>
+    <li data-file="song1.mp3" onclick="playAudio(this)">Song 1</li>
+    <li data-file="song2.mp3" onclick="playAudio(this)">Song 2</li>
+    <li data-file="song3.mp3" onclick="playAudio(this)">Song 3</li>
 </ul>
 
 <div id="images">
@@ -85,14 +101,16 @@
         });
     });
 
-    function playAudio(file, songTitle) {
-    var audioPlayer = document.getElementById('audioPlayer');
-    audioPlayer.src = file;
-    audioPlayer.style.display = "block"; 
-    audioPlayer.play();
-    document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
-    document.getElementById('record').style.display = "block";
-}
+    function playAudio(songElement) {
+        var audioPlayer = document.getElementById('audioPlayer');
+        var songFile = songElement.getAttribute('data-file');
+        var songTitle = songElement.textContent;
+        audioPlayer.src = songFile;
+        audioPlayer.style.display = "block";
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+    }
 
     function shufflePlaylist(playlistId, playerId) {
         var playlist = document.getElementById(playlistId);
@@ -109,32 +127,32 @@
     }
 
     function playShuffledSongs(songs, playerId) {
-    if (songs.length === 0) return;
+        if (songs.length === 0) return;
 
-    var audioPlayer = document.getElementById(playerId);
-    var currentIndex = 0;
+        var audioPlayer = document.getElementById(playerId);
+        var currentIndex = 0;
+        var songTitle = songs[currentIndex].textContent;
 
-    audioPlayer.style.display = "block";
-    audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
-    var songTitle = songs[currentIndex].textContent;
-    audioPlayer.play();
-    document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
-    document.getElementById('record').style.display = "block";
+        audioPlayer.style.display = "block";
+        audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
 
-    audioPlayer.onended = function() {
-        currentIndex++;
-        if (currentIndex < songs.length) {
-            audioPlayer.src = songs[currentIndex].onclick.toString().match(/'([^']+)'/)[1];
-            songTitle = songs[currentIndex].textContent;
-            audioPlayer.play();
-            document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
-        } else {
-            audioPlayer.style.display = "none"; 
-            document.getElementById('nowPlaying').innerText = "Now Playing: None";
-            document.getElementById('record').style.display = "none";
-        }
-    };
-}
+        audioPlayer.onended = function() {
+            currentIndex++;
+            if (currentIndex < songs.length) {
+                audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+                songTitle = songs[currentIndex].textContent;
+                audioPlayer.play();
+                document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+            } else {
+                audioPlayer.style.display = "none";
+                document.getElementById('nowPlaying').innerText = "Now Playing: None";
+                document.getElementById('record').style.display = "none";
+            }
+        };
+    }
 </script>
 
 </body>
