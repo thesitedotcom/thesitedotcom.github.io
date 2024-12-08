@@ -41,10 +41,12 @@
             left: 0;
             animation: spin 3s linear infinite;
             display: none;
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
         }
         #static-record {
-            width: 100px;
-            height: 100px;
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
         }
         @keyframes spin {
             0% {
@@ -75,8 +77,712 @@
 
 <!-- Record and Static Record images above Shuffle Playlist button -->
 <div id="images">
-    <img id="record" src="Blake.png" width="100" height="100">
-    <img id="static-record" src="record-player-blake.png" width="100" height="100">
+    <img id="record" src="Blake.png">
+    <img id="static-record" src="record-player-blake.png">
+</div>
+
+<button id="shuffleButton">Shuffle Playlist</button>
+<button id="togglePlaylistButton">Show Playlist</button> <!-- Button to Toggle Playlist -->
+
+<ul id="playlist">
+    <li data-file="song1.mp3" onclick="playAudio(this)">Song 1</li>
+    <li data-file="song2.mp3" onclick="playAudio(this)">Song 2</li>
+    <li data-file="song3.mp3" onclick="playAudio(this)">Song 3</li>
+</ul>
+
+<audio id="audioPlayer" style="display:none;"></audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audioPlayer = document.getElementById('audioPlayer');
+
+        audioPlayer.onended = function() {
+            document.getElementById('nowPlaying').innerText = "Now Playing: None";
+            document.getElementById('record').style.display = "none";
+        };
+
+        document.getElementById('shuffleButton').addEventListener('click', function() {
+            shufflePlaylist('playlist', 'audioPlayer');
+        });
+
+        // Toggle Playlist visibility
+        document.getElementById('togglePlaylistButton').addEventListener('click', function() {
+            var playlist = document.getElementById('playlist');
+            if (playlist.style.display === "none" || playlist.style.display === "") {
+                playlist.style.display = "block";
+                this.innerText = "Hide Playlist"; // Change button text to "Hide Playlist"
+            } else {
+                playlist.style.display = "none";
+                this.innerText = "Show Playlist"; // Change button text to "Show Playlist"
+            }
+        });
+    });
+
+    function playAudio(songElement) {
+        var audioPlayer = document.getElementById('audioPlayer');
+        var songFile = songElement.getAttribute('data-file');
+        var songTitle = songElement.textContent;
+        audioPlayer.src = songFile;
+        audioPlayer.style.display = "block";
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+    }
+
+    function shufflePlaylist(playlistId, playerId) {
+        var playlist = document.getElementById(playlistId);
+        var songs = Array.from(playlist.getElementsByTagName('li'));
+        shuffleArray(songs);
+        playShuffledSongs(songs, playerId);
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function playShuffledSongs(songs, playerId) {
+        if (songs.length === 0) return;
+
+        var audioPlayer = document.getElementById(playerId);
+        var currentIndex = 0;
+        var songTitle = songs[currentIndex].textContent;
+
+        audioPlayer.style.display = "block";
+        audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+
+        audioPlayer.onended = function() {
+            currentIndex++;
+            if (currentIndex < songs.length) {
+                audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+                songTitle = songs[currentIndex].textContent;
+                audioPlayer.play();
+                document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+            } else {
+                audioPlayer.style.display = "none";
+                document.getElementById('nowPlaying').innerText = "Now Playing: None";
+                document.getElementById('record').style.display = "none";
+            }
+        };
+    }
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Playlist Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #nowPlaying {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #playlist {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 50px;
+            display: none; /* Initially hidden */
+        }
+        #playlist li {
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        #images {
+            position: relative;
+            margin-top: 20px;
+        }
+        #record {
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: spin 3s linear infinite;
+            display: none;
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        #static-record {
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div id="nowPlaying">Now Playing: None</div>
+
+<!-- Record and Static Record images above Shuffle Playlist button -->
+<div id="images">
+    <img id="record" src="Blake.png">
+    <img id="static-record" src="record-player-blake.png">
+</div>
+
+<button id="shuffleButton">Shuffle Playlist</button>
+<button id="togglePlaylistButton">Show Playlist</button> <!-- Button to Toggle Playlist -->
+
+<ul id="playlist">
+    <li data-file="song1.mp3" onclick="playAudio(this)">Song 1</li>
+    <li data-file="song2.mp3" onclick="playAudio(this)">Song 2</li>
+    <li data-file="song3.mp3" onclick="playAudio(this)">Song 3</li>
+</ul>
+
+<audio id="audioPlayer" style="display:none;"></audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audioPlayer = document.getElementById('audioPlayer');
+
+        audioPlayer.onended = function() {
+            document.getElementById('nowPlaying').innerText = "Now Playing: None";
+            document.getElementById('record').style.display = "none";
+        };
+
+        document.getElementById('shuffleButton').addEventListener('click', function() {
+            shufflePlaylist('playlist', 'audioPlayer');
+        });
+
+        // Toggle Playlist visibility
+        document.getElementById('togglePlaylistButton').addEventListener('click', function() {
+            var playlist = document.getElementById('playlist');
+            if (playlist.style.display === "none" || playlist.style.display === "") {
+                playlist.style.display = "block";
+                this.innerText = "Hide Playlist"; // Change button text to "Hide Playlist"
+            } else {
+                playlist.style.display = "none";
+                this.innerText = "Show Playlist"; // Change button text to "Show Playlist"
+            }
+        });
+    });
+
+    function playAudio(songElement) {
+        var audioPlayer = document.getElementById('audioPlayer');
+        var songFile = songElement.getAttribute('data-file');
+        var songTitle = songElement.textContent;
+        audioPlayer.src = songFile;
+        audioPlayer.style.display = "block";
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+    }
+
+    function shufflePlaylist(playlistId, playerId) {
+        var playlist = document.getElementById(playlistId);
+        var songs = Array.from(playlist.getElementsByTagName('li'));
+        shuffleArray(songs);
+        playShuffledSongs(songs, playerId);
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function playShuffledSongs(songs, playerId) {
+        if (songs.length === 0) return;
+
+        var audioPlayer = document.getElementById(playerId);
+        var currentIndex = 0;
+        var songTitle = songs[currentIndex].textContent;
+
+        audioPlayer.style.display = "block";
+        audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+
+        audioPlayer.onended = function() {
+            currentIndex++;
+            if (currentIndex < songs.length) {
+                audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+                songTitle = songs[currentIndex].textContent;
+                audioPlayer.play();
+                document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+            } else {
+                audioPlayer.style.display = "none";
+                document.getElementById('nowPlaying').innerText = "Now Playing: None";
+                document.getElementById('record').style.display = "none";
+            }
+        };
+    }
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Playlist Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #nowPlaying {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #playlist {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 50px;
+            display: none; /* Initially hidden */
+        }
+        #playlist li {
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        #images {
+            position: relative;
+            margin-top: 20px;
+        }
+        #record {
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: spin 3s linear infinite;
+            display: none;
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        #static-record {
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div id="nowPlaying">Now Playing: None</div>
+
+<!-- Record and Static Record images above Shuffle Playlist button -->
+<div id="images">
+    <img id="record" src="Blake.png">
+    <img id="static-record" src="record-player-blake.png">
+</div>
+
+<button id="shuffleButton">Shuffle Playlist</button>
+<button id="togglePlaylistButton">Show Playlist</button> <!-- Button to Toggle Playlist -->
+
+<ul id="playlist">
+    <li data-file="song1.mp3" onclick="playAudio(this)">Song 1</li>
+    <li data-file="song2.mp3" onclick="playAudio(this)">Song 2</li>
+    <li data-file="song3.mp3" onclick="playAudio(this)">Song 3</li>
+</ul>
+
+<audio id="audioPlayer" style="display:none;"></audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audioPlayer = document.getElementById('audioPlayer');
+
+        audioPlayer.onended = function() {
+            document.getElementById('nowPlaying').innerText = "Now Playing: None";
+            document.getElementById('record').style.display = "none";
+        };
+
+        document.getElementById('shuffleButton').addEventListener('click', function() {
+            shufflePlaylist('playlist', 'audioPlayer');
+        });
+
+        // Toggle Playlist visibility
+        document.getElementById('togglePlaylistButton').addEventListener('click', function() {
+            var playlist = document.getElementById('playlist');
+            if (playlist.style.display === "none" || playlist.style.display === "") {
+                playlist.style.display = "block";
+                this.innerText = "Hide Playlist"; // Change button text to "Hide Playlist"
+            } else {
+                playlist.style.display = "none";
+                this.innerText = "Show Playlist"; // Change button text to "Show Playlist"
+            }
+        });
+    });
+
+    function playAudio(songElement) {
+        var audioPlayer = document.getElementById('audioPlayer');
+        var songFile = songElement.getAttribute('data-file');
+        var songTitle = songElement.textContent;
+        audioPlayer.src = songFile;
+        audioPlayer.style.display = "block";
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+    }
+
+    function shufflePlaylist(playlistId, playerId) {
+        var playlist = document.getElementById(playlistId);
+        var songs = Array.from(playlist.getElementsByTagName('li'));
+        shuffleArray(songs);
+        playShuffledSongs(songs, playerId);
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function playShuffledSongs(songs, playerId) {
+        if (songs.length === 0) return;
+
+        var audioPlayer = document.getElementById(playerId);
+        var currentIndex = 0;
+        var songTitle = songs[currentIndex].textContent;
+
+        audioPlayer.style.display = "block";
+        audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+
+        audioPlayer.onended = function() {
+            currentIndex++;
+            if (currentIndex < songs.length) {
+                audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+                songTitle = songs[currentIndex].textContent;
+                audioPlayer.play();
+                document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+            } else {
+                audioPlayer.style.display = "none";
+                document.getElementById('nowPlaying').innerText = "Now Playing: None";
+                document.getElementById('record').style.display = "none";
+            }
+        };
+    }
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Playlist Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #nowPlaying {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #playlist {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 50px;
+            display: none; /* Initially hidden */
+        }
+        #playlist li {
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        #images {
+            position: relative;
+            margin-top: 20px;
+        }
+        #record {
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: spin 3s linear infinite;
+            display: none;
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        #static-record {
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div id="nowPlaying">Now Playing: None</div>
+
+<!-- Record and Static Record images above Shuffle Playlist button -->
+<div id="images">
+    <img id="record" src="Blake.png">
+    <img id="static-record" src="record-player-blake.png">
+</div>
+
+<button id="shuffleButton">Shuffle Playlist</button>
+<button id="togglePlaylistButton">Show Playlist</button> <!-- Button to Toggle Playlist -->
+
+<ul id="playlist">
+    <li data-file="song1.mp3" onclick="playAudio(this)">Song 1</li>
+    <li data-file="song2.mp3" onclick="playAudio(this)">Song 2</li>
+    <li data-file="song3.mp3" onclick="playAudio(this)">Song 3</li>
+</ul>
+
+<audio id="audioPlayer" style="display:none;"></audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audioPlayer = document.getElementById('audioPlayer');
+
+        audioPlayer.onended = function() {
+            document.getElementById('nowPlaying').innerText = "Now Playing: None";
+            document.getElementById('record').style.display = "none";
+        };
+
+        document.getElementById('shuffleButton').addEventListener('click', function() {
+            shufflePlaylist('playlist', 'audioPlayer');
+        });
+
+        // Toggle Playlist visibility
+        document.getElementById('togglePlaylistButton').addEventListener('click', function() {
+            var playlist = document.getElementById('playlist');
+            if (playlist.style.display === "none" || playlist.style.display === "") {
+                playlist.style.display = "block";
+                this.innerText = "Hide Playlist"; // Change button text to "Hide Playlist"
+            } else {
+                playlist.style.display = "none";
+                this.innerText = "Show Playlist"; // Change button text to "Show Playlist"
+            }
+        });
+    });
+
+    function playAudio(songElement) {
+        var audioPlayer = document.getElementById('audioPlayer');
+        var songFile = songElement.getAttribute('data-file');
+        var songTitle = songElement.textContent;
+        audioPlayer.src = songFile;
+        audioPlayer.style.display = "block";
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+    }
+
+    function shufflePlaylist(playlistId, playerId) {
+        var playlist = document.getElementById(playlistId);
+        var songs = Array.from(playlist.getElementsByTagName('li'));
+        shuffleArray(songs);
+        playShuffledSongs(songs, playerId);
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function playShuffledSongs(songs, playerId) {
+        if (songs.length === 0) return;
+
+        var audioPlayer = document.getElementById(playerId);
+        var currentIndex = 0;
+        var songTitle = songs[currentIndex].textContent;
+
+        audioPlayer.style.display = "block";
+        audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+        audioPlayer.play();
+        document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+        document.getElementById('record').style.display = "block";
+
+        audioPlayer.onended = function() {
+            currentIndex++;
+            if (currentIndex < songs.length) {
+                audioPlayer.src = songs[currentIndex].getAttribute('data-file');
+                songTitle = songs[currentIndex].textContent;
+                audioPlayer.play();
+                document.getElementById('nowPlaying').innerText = "Now Playing: " + songTitle;
+            } else {
+                audioPlayer.style.display = "none";
+                document.getElementById('nowPlaying').innerText = "Now Playing: None";
+                document.getElementById('record').style.display = "none";
+            }
+        };
+    }
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Playlist Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #nowPlaying {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #playlist {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 50px;
+            display: none; /* Initially hidden */
+        }
+        #playlist li {
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        #images {
+            position: relative;
+            margin-top: 20px;
+        }
+        #record {
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: spin 3s linear infinite;
+            display: none;
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        #static-record {
+            width: 150px; /* Change size here */
+            height: 150px; /* Change size here */
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div id="nowPlaying">Now Playing: None</div>
+
+<!-- Record and Static Record images above Shuffle Playlist button -->
+<div id="images">
+    <img id="record" src="Blake.png">
+    <img id="static-record" src="record-player-blake.png">
 </div>
 
 <button id="shuffleButton">Shuffle Playlist</button>
