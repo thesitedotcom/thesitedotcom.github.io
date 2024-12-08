@@ -73,6 +73,7 @@
 <div id="nowPlaying">Now Playing: None</div>
 
 <button id="shuffleButton">Shuffle Playlist</button>
+<button id="togglePlaylistButton">Show Playlist</button> <!-- New Button to Toggle Playlist -->
 
 <ul id="playlist">
     <li data-file="song1.mp3" onclick="playAudio(this)">Song 1</li>
@@ -98,6 +99,18 @@
 
         document.getElementById('shuffleButton').addEventListener('click', function() {
             shufflePlaylist('playlist', 'audioPlayer');
+        });
+
+        // Toggle Playlist visibility
+        document.getElementById('togglePlaylistButton').addEventListener('click', function() {
+            var playlist = document.getElementById('playlist');
+            if (playlist.style.display === "none" || playlist.style.display === "") {
+                playlist.style.display = "block";
+                this.innerText = "Hide Playlist"; // Change button text to "Hide Playlist"
+            } else {
+                playlist.style.display = "none";
+                this.innerText = "Show Playlist"; // Change button text to "Show Playlist"
+            }
         });
     });
 
