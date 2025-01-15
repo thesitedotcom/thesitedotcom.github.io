@@ -5,12 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chatroom</title>
   <style>
-    body { font-family: Arial, sans-serif; }
-    #messages { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #messages { 
+      border: 1px solid #ccc; 
+      padding: 10px; 
+      height: 300px; 
+      overflow-y: auto; 
+      margin-bottom: 10px;
+    }
     .message { margin: 5px 0; }
-    #form { display: flex; margin-top: 10px; }
-    #form input { flex: 1; padding: 10px; }
-    #form button { padding: 10px; }
+    #form { display: flex; margin-top: 10px; gap: 10px; }
+    #form select, #form input, #form button { padding: 10px; }
+    #form select, #form input { flex: 1; }
   </style>
 </head>
 <body>
@@ -29,14 +35,17 @@
     <button onclick="sendMessage()">Send</button>
   </div>
   <script>
-    const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev//"; // Replace with your Replit backend URL
+    const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev"; // Replace with your backend URL
 
     async function fetchMessages() {
       try {
         const response = await fetch(`${backendUrl}/messages`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         const messagesDiv = document.getElementById("messages");
-        messagesDiv.innerHTML = "";
+        messagesDiv.innerHTML = ""; // Clear previous messages
         data.forEach(msg => {
           const messageElement = document.createElement("div");
           messageElement.classList.add("message");
@@ -52,17 +61,20 @@
     async function sendMessage() {
       const username = document.getElementById("username").value;
       const message = document.getElementById("message").value;
-      if (!username || !message) {
+      if (!username || !message.trim()) {
         alert("Please fill in both fields.");
         return;
       }
 
       try {
-        await fetch(`${backendUrl}/messages`, {
+        const response = await fetch(`${backendUrl}/messages`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, message })
+          body: JSON.stringify({ username, message: message.trim() })
         });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         document.getElementById("message").value = ""; // Clear the message input
         fetchMessages(); // Refresh messages
       } catch (error) {
@@ -72,6 +84,9 @@
 
     // Fetch messages every 2 seconds
     setInterval(fetchMessages, 2000);
+
+    // Fetch messages once when the page loads
+    fetchMessages();
   </script>
 </body>
 </html>
