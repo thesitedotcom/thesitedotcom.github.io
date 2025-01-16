@@ -29,7 +29,9 @@
     <a href="../index" style="color: white;">Back to Homepage</a>
 </footer>
 
-<script // request permission on page load
+<script 
+    Notification.requestPermission()
+    // request permission on page load
 document.addEventListener('DOMContentLoaded', function() {
  if (!Notification) {
   alert('Desktop notifications not available in your browser. Try Chromium.');
