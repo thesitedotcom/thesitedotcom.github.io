@@ -37,6 +37,12 @@
   <script>
     const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev"; // Replace with your backend URL
 
+    document.querySelector("#addLinks").addEventListener("keyup", event => {
+    if (event.key !== "Enter") 
+      return; sendMessage();
+    event.preventDefault();
+;
+    
     async function fetchMessages() {
       try {
         const response = await fetch(`${backendUrl}/messages`);
