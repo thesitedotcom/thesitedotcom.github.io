@@ -56,24 +56,22 @@
   </div>
 
   <script>
-    const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev"; // Replace with your actual backend URL
-
-    // Fetch messages every 1 second
-    setInterval(fetchMessages, 1000);
-
-    // Fetch typing status every 1 second
-    setInterval(fetchTypingStatus, 1000);
-
-    // Fetch messages once when the page loads
-    fetchMessages();
-
-    // Function to fetch messages
+    document.querySelector("#message").addEventListener("keyup", event => {
+    if(event.key !== "Enter") return; // Use `.key` instead.
+    document.querySelector("#message").click(); // Things you want to do.
+    event.preventDefault(); // No need to `return false;`.
+});
+    const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev"; // Replace with your backend URL
+    
     async function fetchMessages() {
       try {
         const response = await fetch(`${backendUrl}/messages`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         const messagesDiv = document.getElementById("messages");
-        messagesDiv.innerHTML = "";
+        messagesDiv.innerHTML = ""; // Clear previous messages
         data.forEach(msg => {
           const messageElement = document.createElement("div");
           messageElement.classList.add("message");
@@ -86,7 +84,6 @@
       }
     }
 
-    // Function to send messages
     async function sendMessage() {
       const username = sessionStorage.getItem("userName") || "Anonymous";
       const message = document.getElementById("message").value;
@@ -101,11 +98,9 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, message: message.trim() })
         });
-
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         document.getElementById("message").value = ""; // Clear the message input
         fetchMessages(); // Refresh messages
       } catch (error) {
@@ -113,39 +108,11 @@
       }
     }
 
-    // Typing feature: Notify backend and fetch typing status
-    let typingTimeout;
+    // Fetch messages every 2 seconds
+    setInterval(fetchMessages, 2000);
 
-    function notifyTyping(isTyping) {
-      const username = sessionStorage.getItem("userName") || "Anonymous";
-      fetch(`${backendUrl}/typing`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, isTyping })
-      }).catch(err => console.error("Error updating typing status:", err));
-    }
-
-    document.querySelector("#message").addEventListener("input", () => {
-      if (typingTimeout) clearTimeout(typingTimeout);
-      notifyTyping(true);
-      typingTimeout = setTimeout(() => notifyTyping(false), 1000); // Notify stop typing after 1s
-    });
-
-    async function fetchTypingStatus() {
-      try {
-        const response = await fetch(`${backendUrl}/typing`);
-        const typingUsers = await response.json();
-        const typingStatusDiv = document.getElementById("typingStatus");
-
-        if (typingUsers.length > 0) {
-          typingStatusDiv.innerText = `${typingUsers.join(", ")} ${typingUsers.length === 1 ? "is" : "are"} typing...`;
-        } else {
-          typingStatusDiv.innerText = ""; // Clear if no one is typing
-        }
-      } catch (error) {
-        console.error("Error fetching typing status:", error);
-      }
-    }
+    // Fetch messages once when the page loads
+    fetchMessages();
   </script>
 </body>
 </html>
