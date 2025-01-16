@@ -45,7 +45,6 @@
     <input type="text" id="message" placeholder="Your message" autocomplete="off">
     <button id="sendButton">Send</button>
   </div>
-  <div id="typingStatus"></div>
   <div class="features">
     Upcoming features:
     <ul>
@@ -56,13 +55,8 @@
   </div>
 
   <script>
-    document.querySelector("#message").addEventListener("keyup", event => {
-    if(event.key !== "Enter") return; // Use `.key` instead.
-    document.querySelector("#message").click(); // Things you want to do.
-    event.preventDefault(); // No need to `return false;`.
-});
     const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev"; // Replace with your backend URL
-    
+
     async function fetchMessages() {
       try {
         const response = await fetch(`${backendUrl}/messages`);
@@ -86,9 +80,9 @@
 
     async function sendMessage() {
       const username = sessionStorage.getItem("userName") || "Anonymous";
-      const message = document.getElementById("message").value;
-      if (!username || !message.trim()) {
-        alert("Please fill in both fields.");
+      const message = document.getElementById("message").value.trim();
+      if (!message) {
+        alert("Message cannot be empty.");
         return;
       }
 
@@ -96,7 +90,7 @@
         const response = await fetch(`${backendUrl}/messages`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, message: message.trim() })
+          body: JSON.stringify({ username, message })
         });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -107,6 +101,14 @@
         console.error("Error sending message:", error);
       }
     }
+
+    document.getElementById("message").addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    document.getElementById("sendButton").addEventListener("click", sendMessage);
 
     // Fetch messages every 2 seconds
     setInterval(fetchMessages, 2000);
