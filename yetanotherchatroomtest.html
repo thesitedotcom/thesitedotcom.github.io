@@ -60,7 +60,7 @@
     }
 
     async function sendMessage() {
-      const username = document.getElementById("username").value;
+      const username = sessionStorage.getItem("userName") || "Anonymous";
       const message = document.getElementById("message").value;
       if (!username || !message.trim()) {
         alert("Please fill in both fields.");
