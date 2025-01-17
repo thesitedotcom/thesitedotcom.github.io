@@ -1,65 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatroom</title>
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      margin: 20px; 
-      background-color: #262626;
-    }
-    #messages { 
-      padding: 10px; 
-      height: 600px; 
-      overflow-y: auto; 
-      margin-bottom: 20px; 
-      background-color: #262626;
-    }
-    .message { 
-      margin: 5px 0; 
-      color: white;
-    }
-    #form { 
-      display: flex; 
-      margin-top: 10px; 
-      gap: 10px; 
-    }
-    #form select, #form input, #form button { 
-      padding: 10px; 
-    }
-    #form input { 
-      flex: 1; 
-    }
-    .features {
-      margin-top: 15px;
-      font-style: italic;
-      color: #cccccc;
-    }
-  </style>
-</head>
-<body>
-  <div id="messages"></div>
-  <div id="form">
-    <input type="text" id="message" autocomplete="off" style="background:gray">
-    <button id="sendButton">Send</button>
-  </div>
-  <div class="features">
-    Upcoming features:
-    <ul>
-      <li><strong>(username)</strong> is typing</li>
-      <li>Picture support</li>
-      <li>Secret chatting</li>
-      <li>Styling</li>
-      <li>Personalised messages (custom colors, fonts, etc.)</li>
-    </ul>
-  </div>
-
-    <script src="scripts/passwordReturn.js"></script>
-  
-  <script>
+<script>
     const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev"; // Replace with your backend URL
+
+    let typingTimeout;
 
     async function fetchMessages() {
       try {
@@ -100,25 +42,65 @@
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         document.getElementById("message").value = ""; // Clear the message input
+        notifyTyping(false); // Stop typing status after sending
         fetchMessages(); // Refresh messages
       } catch (error) {
         console.error("Error sending message:", error);
       }
     }
 
-    document.getElementById("message").addEventListener("keyup", (event) => {
-      if (event.key === "Enter") {
-        sendMessage();
+    // Typing Feature: Notify backend when the user is typing
+    async function notifyTyping(isTyping) {
+      const username = sessionStorage.getItem("userName") || "Anonymous";
+      try {
+        await fetch(`${backendUrl}/typing`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, isTyping })
+        });
+      } catch (error) {
+        console.error("Error updating typing status:", error);
       }
+    }
+
+    document.getElementById("message").addEventListener("input", () => {
+      notifyTyping(true); // Notify typing
+      if (typingTimeout) clearTimeout(typingTimeout);
+      typingTimeout = setTimeout(() => notifyTyping(false), 2000); // Stop typing after 2s
     });
 
-    document.getElementById("sendButton").addEventListener("click", sendMessage);
+    // Fetch Typing Status
+    async function fetchTypingStatus() {
+      try {
+        const response = await fetch(`${backendUrl}/typing`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const typingUsers = await response.json();
+        const typingStatusDiv = document.getElementById("typingStatus");
 
-    // Fetch messages every 2 seconds
+        if (typingUsers.length > 0) {
+          typingStatusDiv.innerText = `${typingUsers.join(", ")} ${
+            typingUsers.length === 1 ? "is" : "are"
+          } typing...`;
+        } else {
+          typingStatusDiv.innerText = ""; // Clear if no one is typing
+        }
+      } catch (error) {
+        console.error("Error fetching typing status:", error);
+      }
+    }
+
+    // Fetch messages and typing status at intervals
     setInterval(fetchMessages, 1000);
+    setInterval(fetchTypingStatus, 1000);
 
-    // Fetch messages once when the page loads
+    document.getElementById("sendButton").addEventListener("click", sendMessage);
+    document.getElementById("message").addEventListener("keyup", (event) => {
+      if (event.key === "Enter") sendMessage();
+    });
+
+    // Fetch messages and typing status once when the page loads
     fetchMessages();
-  </script>
-</body>
-</html>
+    fetchTypingStatus();
+</script>
