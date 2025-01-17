@@ -45,6 +45,7 @@
     <input type="text" id="message" autocomplete="off" style="background:gray">
     <button id="sendButton">Send</button>
   </div>
+  <div id="typingStatus"></div>
   <div class="features">
     Upcoming features:
     <ul>
@@ -129,22 +130,19 @@
       typingTimeout = setTimeout(() => notifyTyping(false), 2000); // Stop typing after 2s
     });
 
-    // Fetch Typing Status
+   // Fetch typing status
     async function fetchTypingStatus() {
       try {
         const response = await fetch(`${backendUrl}/typing`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const typingUsers = await response.json();
         const typingStatusDiv = document.getElementById("typingStatus");
-
         if (typingUsers.length > 0) {
           typingStatusDiv.innerText = `${typingUsers.join(", ")} ${
             typingUsers.length === 1 ? "is" : "are"
           } typing...`;
         } else {
-          typingStatusDiv.innerText = ""; // Clear if no one is typing
+          typingStatusDiv.innerText = "";
         }
       } catch (error) {
         console.error("Error fetching typing status:", error);
