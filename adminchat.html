@@ -37,7 +37,7 @@
                 data.forEach(msg => {
                     const messageElement = document.createElement("div");
                     messageElement.classList.add("message");
-                    messageElement.innerHTML = `<strong>${username}</strong>: ${msg.message}`;
+                    messageElement.innerHTML = `<en>${msg.message}</i>`;
                     messagesDiv.appendChild(messageElement);
                 });
                 messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll to the latest message
