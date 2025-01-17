@@ -1,4 +1,64 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatroom</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 20px; 
+      background-color: #262626;
+    }
+    #messages { 
+      padding: 10px; 
+      height: 600px; 
+      overflow-y: auto; 
+      margin-bottom: 20px; 
+      background-color: #262626;
+    }
+    .message { 
+      margin: 5px 0; 
+      color: white;
+    }
+    #form { 
+      display: flex; 
+      margin-top: 10px; 
+      gap: 10px; 
+    }
+    #form select, #form input, #form button { 
+      padding: 10px; 
+    }
+    #form input { 
+      flex: 1; 
+    }
+    .features {
+      margin-top: 15px;
+      font-style: italic;
+      color: #cccccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="messages"></div>
+  <div id="form">
+    <input type="text" id="message" autocomplete="off" style="background:gray">
+    <button id="sendButton">Send</button>
+  </div>
+  <div class="features">
+    Upcoming features:
+    <ul>
+      <li><strong>(username)</strong> is typing</li>
+      <li>Picture support</li>
+      <li>Secret chatting</li>
+      <li>Styling</li>
+      <li>Personalised messages (custom colors, fonts, etc.)</li>
+    </ul>
+  </div>
+
+    <script src="scripts/passwordReturn.js"></script>
+  
+ <script>
     const backendUrl = "https://7f4885e8-6c9d-47db-99bc-ebdcd8320b2a-00-2dl23l4z46544.picard.replit.dev"; // Replace with your backend URL
 
     let typingTimeout;
@@ -104,3 +164,6 @@
     fetchMessages();
     fetchTypingStatus();
 </script>
+
+</body>
+</html>
