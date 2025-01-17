@@ -94,7 +94,7 @@
         const response = await fetch(`${backendUrl}/messages`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, message })
+          body: JSON.stringify({ username, message, <?php echo date("h:m s); ?> })
         });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
