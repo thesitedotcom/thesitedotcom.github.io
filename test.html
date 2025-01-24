@@ -37,9 +37,9 @@
         }
         #record {
             position: absolute;
-            top: 0;
-            left: 0;
-            animation: spin 3s linear infinite;
+            top: 20;
+            left: 20;
+            animation: spin 1.8s linear infinite;
             display: none;
         }
         #static-record {
@@ -92,7 +92,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var audioPlayer = document.getElementById('audioPlayer');
+        let audioPlayer = document.getElementById('audioPlayer');
 
         audioPlayer.onended = function() {
             document.getElementById('nowPlaying').innerText = "Now Playing: None";
@@ -105,7 +105,7 @@
 
         // Toggle Playlist visibility
         document.getElementById('togglePlaylistButton').addEventListener('click', function() {
-            var playlist = document.getElementById('playlist');
+            let playlist = document.getElementById('playlist');
             if (playlist.style.display === "none" || playlist.style.display === "") {
                 playlist.style.display = "block";
                 this.innerText = "Hide Playlist"; // Change button text to "Hide Playlist"
@@ -117,9 +117,9 @@
     });
 
     function playAudio(songElement) {
-        var audioPlayer = document.getElementById('audioPlayer');
-        var songFile = songElement.getAttribute('data-file');
-        var songTitle = songElement.textContent;
+        let audioPlayer = document.getElementById('audioPlayer');
+        let songFile = songElement.getAttribute('data-file');
+        let songTitle = songElement.textContent;
         audioPlayer.src = songFile;
         audioPlayer.style.display = "block";
         audioPlayer.play();
@@ -128,8 +128,8 @@
     }
 
     function shufflePlaylist(playlistId, playerId) {
-        var playlist = document.getElementById(playlistId);
-        var songs = Array.from(playlist.getElementsByTagName('li'));
+        let playlist = document.getElementById(playlistId);
+        let songs = Array.from(playlist.getElementsByTagName('li'));
         shuffleArray(songs);
         playShuffledSongs(songs, playerId);
     }
@@ -144,9 +144,9 @@
     function playShuffledSongs(songs, playerId) {
         if (songs.length === 0) return;
 
-        var audioPlayer = document.getElementById(playerId);
-        var currentIndex = 0;
-        var songTitle = songs[currentIndex].textContent;
+        let audioPlayer = document.getElementById(playerId);
+        let currentIndex = 0;
+        let songTitle = songs[currentIndex].textContent;
 
         audioPlayer.style.display = "block";
         audioPlayer.src = songs[currentIndex].getAttribute('data-file');
