@@ -27,10 +27,8 @@
                 //static images
     'url(https://64.media.tumblr.com/edab59e6b87d8a686ef9497eff28badb/db9e886ebdb810a6-96/s2560x500/5987fd825422ea1a3c96d250805247480668e744.jpg)',
     'url(https://64.media.tumblr.com/d18871b04c6fa49a3990466c702dd32d/91e68b70a2fefd29-b3/s1280x1920/ad2ebbe03824208c7ff394476d003cc6d728d695.png)',
-    'url(https://64.media.tumblr.com/f472904010f9329532c1570ca08a3551/38003b7f0bdce328-5b/s1280x1920/432ce7bfd0d7eea2e1b48b57395d68fe461645dd.png)',
     'url(https://64.media.tumblr.com/49f23407906c111dd824d7c84dcae6b3/7bba3e4c8638579a-6b/s1280x1920/efda83120980570cc3bbf0547590da75bc1f76c2.jpg)',
     'url(https://64.media.tumblr.com/b52e1b42ec7eda223bca5fa83f711d6d/tumblr_prlnsmLbhh1xvoqyho1_1280.png)',
-    'url(https://64.media.tumblr.com/473e82d64c564372ed9c514088d23b31/tumblr_pi15f85cRq1xvoqyho1_1280.png)',
     'url(https://64.media.tumblr.com/021059f9d2b4174b27361bcb68acd23e/17cce4d544076129-38/s1280x1920/92082f66e779a3aa6a8868d55f2f37305415f7c0.jpg)',
     'url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3e542269-8836-44b9-a2b7-a39844589af5/dc8qmue-5023ee67-bc48-4893-bf0e-cb991d3117a7.png/v1/fill/w_689,h_350,q_70,strp/street_art_by_minimoss_dc8qmue-350t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjEwIiwicGF0aCI6IlwvZlwvM2U1NDIyNjktODgzNi00NGI5LWEyYjctYTM5ODQ0NTg5YWY1XC9kYzhxbXVlLTUwMjNlZTY3LWJjNDgtNDg5My1iZjBlLWNiOTkxZDMxMTdhNy5wbmciLCJ3aWR0aCI6Ijw9MTIwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.X9qV0jtUnHwrn2xzrzOi-FoO2Yrt9o3thAY1qkF_NNY)',
                 //not minimoss
@@ -46,16 +44,11 @@
     'url(https://64.media.tumblr.com/975d10cff3c6f6eeb852068eff52352f/b84534345dc9ae51-4d/s2048x3072/c05991ea3cad40645148c5e2a0405e8a228423b2.gif)',
     'url(https://64.media.tumblr.com/0fa488fe6ccfd2b65e7973159cf00a14/501b9516989ec5bd-91/s2048x3072/5af6f196a6f1d91bc43c50701c2a9c01ac42b18e.gif)',
     'url(https://64.media.tumblr.com/734036212ce8b8d11d14c703d201de4a/e9fb754dc1dd895f-01/s2048x3072/aa44861be049e1ed5007357f7bbbff9492daae04.gif)',
-    'url(https://64.media.tumblr.com/d26b37529c3e8763bc276beae035208c/050c858b2a5af1e1-41/s2048x3072/8be8fb0852edbf4cd53a6b6e3bfee69f8c98e30d.gif)',
-    'url(https://64.media.tumblr.com/e632c4c414dfa3d394340fafc81760d7/30f79c5d5f5a9879-cf/s2048x3072/6c2710ef1c00ab3b536370cc2ede914e4f7e8a19.gif)',
-    'url(https://64.media.tumblr.com/74535518115cc6e41b3489fa5c7929c8/tumblr_ol7e617sCb1tgo74ho1_1280.gif)',
     'url(https://64.media.tumblr.com/1d7524099a7a4776c3f8ed8a36bf65f4/2c6d60a1a86d82c2-13/s1280x1920/9391d30fec215e2eca1f7c9ef7e2ae050287d077.gif)',
-    'url(https://64.media.tumblr.com/e90ff0ea1245fa114d3d868140f71b4f/tumblr_oiosbm0M371tgo74ho1_1280.gif)',
     'url(https://64.media.tumblr.com/aae2ae7ea74eddc47c04d725675c0f4a/e66b9089f62b9bb9-59/s1280x1920/be33c72298b17b344b82f6f111424a4ec44ecb68.gif)',
     'url(https://64.media.tumblr.com/56b582297c6e7c74335869cd174981a0/tumblr_pov88pnK3q1tgo74ho1_1280.gif)',
     'url(https://64.media.tumblr.com/09e5dc215ed9e09a0a96094e5255720e/7770f13ba34dd3f9-79/s1280x1920/3f6b0eed44af414c3205323209212905b3d31c16.gif)',
     'url(https://64.media.tumblr.com/3114eb49200ee4e6894bab5dd567116d/2b1b497d83a88681-87/s1280x1920/ca541d812ebb95cab5fd6303820a5fcfd56a13e8.gif)',
-    'url(https://64.media.tumblr.com/3262b8b2b367853430c1306c851b1658/tumblr_o5sb1mXvFE1tgo74ho1_1280.gif)',
     'url(https://64.media.tumblr.com/4da998fa345d2c148fc92dedff9a8b65/83096ff748c57324-49/s2048x3072/fc883f870d53e6333aebd2e940f504056a1c418e.gif)',
     'url(https://64.media.tumblr.com/301ebbca7ba47297cddc9632e6577492/tumblr_pkv5hfatoS1tgo74ho1_1280.gif)',
 ];
