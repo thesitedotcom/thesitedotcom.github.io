@@ -3,41 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Player - MP3 & OGG</title>
+    <title>Music Player</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            background-color: #121212; /* Dark background fallback */
         }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Dim overlay */
+            z-index: 0.1;
+            pointer-events: none;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 2; /* Ensure content is above the overlay */
+        }
+        
+        .text {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 5px;
+            display: inline-block;
+            width: auto;
+            margin-bottom: 10px;
+        }
+        
         h1 {
-            color: #333;
+            color: white;
             text-align: center;
         }
+        
+        h2 {
+            color: white;
+        }
+        
         .player-container {
-            background-color: white;
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             margin-bottom: 20px;
         }
+        
         .song-title {
             font-weight: bold;
             margin-bottom: 10px;
         }
+        
         audio {
             width: 100%;
             margin-top: 10px;
         }
+        
         .file-input {
             margin: 20px 0;
             padding: 20px;
-            background-color: white;
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
+        
         button {
             background-color: #4CAF50;
             color: white;
@@ -51,44 +91,52 @@
             cursor: pointer;
             border-radius: 4px;
         }
+        
         button:hover {
             background-color: #45a049;
         }
+        
         #playlist-container {
             margin-top: 20px;
         }
+        
         .error {
-            color: red;
+            color: #ffaaaa;
             padding: 10px;
-            background-color: #ffeeee;
+            background-color: rgba(80, 0, 0, 0.6);
             border-radius: 4px;
             margin: 10px 0;
         }
+        
         .playlist-item {
             padding: 10px;
-            background-color: #f9f9f9;
+            background-color: rgba(0, 0, 0, 0.4);
             border-radius: 5px;
             margin: 5px 0;
             cursor: pointer;
         }
+        
         .playlist-item.active {
-            background-color: #e0f7e0;
+            background-color: rgba(76, 175, 80, 0.3);
             font-weight: bold;
         }
+        
         .main-player {
-            background-color: #2c3e50;
+            background-color: rgba(44, 62, 80, 0.8);
             color: white;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
             display: none;
         }
+        
         .controls {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-top: 15px;
         }
+        
         .control-btn {
             background-color: #3498db;
             color: white;
@@ -103,15 +151,19 @@
             justify-content: center;
             font-size: 18px;
         }
+        
         .control-btn:hover {
             background-color: #2980b9;
         }
+        
         .control-btn#play-pause {
             background-color: #e74c3c;
         }
+        
         .control-btn#play-pause:hover {
             background-color: #c0392b;
         }
+        
         .player-title {
             text-align: center;
             margin-bottom: 15px;
@@ -120,21 +172,26 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        
         .shuffle-btn {
             background-color: #9b59b6;
         }
+        
         .shuffle-btn:hover {
             background-color: #8e44ad;
         }
+        
         .shuffle-btn.active {
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
+        
         .preset-container {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 15px;
         }
+        
         .preset-btn {
             flex: 1;
             min-width: 150px;
@@ -148,53 +205,64 @@
             font-weight: bold;
             transition: transform 0.2s;
         }
+        
         .preset-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        
         .custom-upload {
             margin-top: 20px;
             padding-top: 15px;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid #444;
         }
+        
         .tab-container {
             display: flex;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #444;
             margin-bottom: 15px;
         }
+        
         .tab {
             padding: 10px 20px;
             cursor: pointer;
-            background-color: #f1f1f1;
-            border: 1px solid #ddd;
+            background-color: rgba(40, 40, 40, 0.6);
+            border: 1px solid #444;
             border-bottom: none;
             border-radius: 5px 5px 0 0;
             margin-right: 5px;
+            color: white;
         }
+        
         .tab.active {
-            background-color: white;
-            border-bottom: 1px solid white;
+            background-color: rgba(60, 60, 60, 0.8);
+            border-bottom: 1px solid #555;
             margin-bottom: -1px;
         }
+        
         .tab-content {
             display: none;
         }
+        
         .tab-content.active {
             display: block;
         }
+        
         .loading {
             text-align: center;
             padding: 20px;
             font-style: italic;
-            color: #666;
+            color: #aaa;
         }
+        
         .playlist-info {
             margin-top: 15px;
             padding: 10px;
-            background-color: #f0f8ff;
+            background-color: rgba(16, 56, 82, 0.6);
             border-radius: 5px;
             border-left: 4px solid #3498db;
         }
+        
         .format-badge {
             display: inline-block;
             padding: 2px 6px;
@@ -203,58 +271,103 @@
             margin-left: 5px;
             color: white;
         }
+        
         .format-mp3 {
             background-color: #27ae60;
         }
+        
         .format-ogg {
             background-color: #e67e22;
         }
+        
+        footer {
+            color: white;
+            text-align: left;
+            padding: 10px;
+            font-size: 14px;
+            position: relative;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 5px;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul li {
+            margin-bottom: 10px;
+        }
+        
+        input[type="file"] {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #444;
+        }
     </style>
+    <script src="scripts/passwordReturn.js"></script>
 </head>
 <body>
-    <h1>Audio Player - MP3 & OGG</h1>
-    
-    <div class="file-input">
-        <div class="tab-container">
-            <div class="tab active" data-tab="preset">Preset Playlists</div>
-            <div class="tab" data-tab="custom">Custom Playlist</div>
+    <div class="content">
+        <div class="text">
+            <h1>Music Player</h1>
         </div>
         
-        <div id="preset-tab" class="tab-content active">
-            <h2>Select a Playlist</h2>
-            <div class="preset-container">
-                <button class="preset-btn" data-playlist="rock.txt">Rock Classics</button>
-                <button class="preset-btn" data-playlist="jazz.txt">Jazz Standards</button>
-                <button class="preset-btn" data-playlist="classical.txt">Classical Music</button>
-                <button class="preset-btn" data-playlist="electronic.txt">Electronic Beats</button>
+        <div class="file-input">
+            <div class="tab-container">
+                <div class="tab active" data-tab="preset">Preset Playlists</div>
+                <div class="tab" data-tab="custom">Custom Playlist</div>
             </div>
-            <div class="playlist-info">
-                Note: Playlist files (rock.txt, jazz.txt, classical.txt, electronic.txt) should be in the same folder as this HTML file.
-                <br>Both MP3 and OGG formats are supported.
+            
+            <div id="preset-tab" class="tab-content active">
+                <div class="text">
+                    <h2>Select a Playlist</h2>
+                </div>
+                <div class="preset-container">
+                    <button class="preset-btn" data-playlist="rock.txt">Rock Classics</button>
+                    <button class="preset-btn" data-playlist="jazz.txt">Jazz Standards</button>
+                    <button class="preset-btn" data-playlist="classical.txt">Classical Music</button>
+                    <button class="preset-btn" data-playlist="electronic.txt">Electronic Beats</button>
+                </div>
+                <div class="playlist-info">
+                    Note: Playlist files (rock.txt, jazz.txt, classical.txt, electronic.txt) should be in the same folder as this HTML file.
+                    <br>Both MP3 and OGG formats are supported.
+                </div>
+            </div>
+            
+            <div id="custom-tab" class="tab-content">
+                <div class="text">
+                    <h2>Upload Your Own Playlist</h2>
+                </div>
+                <p>Select a text file containing MP3/OGG links (one per line):</p>
+                <input type="file" id="txtFileInput" accept=".txt">
+                <button id="loadCustomBtn">Load Custom Playlist</button>
             </div>
         </div>
         
-        <div id="custom-tab" class="tab-content">
-            <h2>Upload Your Own Playlist</h2>
-            <p>Select a text file containing MP3/OGG links (one per line):</p>
-            <input type="file" id="txtFileInput" accept=".txt">
-            <button id="loadCustomBtn">Load Custom Playlist</button>
+        <div id="main-player" class="main-player">
+            <div class="player-title" id="current-song-title">No song selected</div>
+            <audio id="main-audio" controls style="width: 100%;"></audio>
+            <div class="controls">
+                <button id="prev" class="control-btn">⏮️</button>
+                <button id="play-pause" class="control-btn">▶️</button>
+                <button id="next" class="control-btn">⏭️</button>
+                <button id="shuffle" class="control-btn shuffle-btn">🔀</button>
+            </div>
         </div>
-    </div>
-    
-    <div id="main-player" class="main-player">
-        <div class="player-title" id="current-song-title">No song selected</div>
-        <audio id="main-audio" controls style="width: 100%;"></audio>
-        <div class="controls">
-            <button id="prev" class="control-btn">⏮️</button>
-            <button id="play-pause" class="control-btn">▶️</button>
-            <button id="next" class="control-btn">⏭️</button>
-            <button id="shuffle" class="control-btn shuffle-btn">🔀</button>
+        
+        <div class="text">
+            <h2>Playlist</h2>
         </div>
+        <div id="playlist-container"></div>
+        
+        <footer>
+            Audio Player v1.1 - MP3 & OGG Support
+        </footer>
     </div>
-    
-    <h2>Playlist</h2>
-    <div id="playlist-container"></div>
     
     <script>
         // Player state
@@ -599,9 +712,10 @@
                 const warningDiv = document.createElement('div');
                 warningDiv.className = 'error';
                 warningDiv.textContent = "Warning: Your browser doesn't support OGG audio format. OGG files will not play correctly.";
-                document.body.insertBefore(warningDiv, document.body.firstChild);
+                document.querySelector('.content').insertBefore(warningDiv, document.querySelector('.content').firstChild);
             }
         });
     </script>
+    <script src="scripts/rbg.js"></script>
 </body>
 </html>
