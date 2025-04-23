@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP3 Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .player-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .song-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .file-input {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #playlist-container {
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+            padding: 10px;
+            background-color: #ffeeee;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .playlist-item {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .playlist-item.active {
+            background-color: #e0f7e0;
+            font-weight: bold;
+        }
+        .main-player {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .control-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .control-btn:hover {
+            background-color: #2980b9;
+        }
+        .control-btn#play-pause {
+            background-color: #e74c3c;
+        }
+        .control-btn#play-pause:hover {
+            background-color: #c0392b;
+        }
+        .player-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .shuffle-btn {
+            background-color: #9b59b6;
+        }
+        .shuffle-btn:hover {
+            background-color: #8e44ad;
+        }
+        .shuffle-btn.active {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        .preset-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .preset-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .preset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .custom-upload {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        .playlist-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>MP3 Player</h1>
+    
+    <div class="file-input">
+        <div class="tab-container">
+            <div class="tab active" data-tab="preset">Preset Playlists</div>
+            <div class="tab" data-tab="custom">Custom Playlist</div>
+        </div>
+        
+        <div id="preset-tab" class="tab-content active">
+            <h2>Select a Playlist</h2>
+            <div class="preset-container">
+                <button class="preset-btn" data-playlist="rock.txt">Rock Classics</button>
+                <button class="preset-btn" data-playlist="jazz.txt">Jazz Standards</button>
+                <button class="preset-btn" data-playlist="classical.txt">Classical Music</button>
+                <button class="preset-btn" data-playlist="electronic.txt">Electronic Beats</button>
+            </div>
+            <div class="playlist-info">
+                Note: Playlist files (rock.txt, jazz.txt, classical.txt, electronic.txt) should be in the same folder as this HTML file.
+            </div>
+        </div>
+        
+        <div id="custom-tab" class="tab-content">
+            <h2>Upload Your Own Playlist</h2>
+            <p>Select a text file containing MP3 links (one per line):</p>
+            <input type="file" id="txtFileInput" accept=".txt">
+            <button id="loadCustomBtn">Load Custom Playlist</button>
+        </div>
+    </div>
+    
+    <div id="main-player" class="main-player">
+        <div class="player-title" id="current-song-title">No song selected</div>
+        <audio id="main-audio" controls style="width: 100%;"></audio>
+        <div class="controls">
+            <button id="prev" class="control-btn">⏮️</button>
+            <button id="play-pause" class="control-btn">▶️</button>
+            <button id="next" class="control-btn">⏭️</button>
+            <button id="shuffle" class="control-btn shuffle-btn">🔀</button>
+        </div>
+    </div>
+    
+    <h2>Playlist</h2>
+    <div id="playlist-container"></div>
+    
+    <script>
+        // Player state
+        const playerState = {
+            playlist: [],
+            currentIndex: 0,
+            isPlaying: false,
+            isShuffled: false,
+            originalPlaylist: [],
+            shuffledIndices: []
+        };
+        
+        // Elements
+        const mainAudio = document.getElementById('main-audio');
+        const playPauseBtn = document.getElementById('play-pause');
+        const nextBtn = document.getElementById('next');
+        const prevBtn = document.getElementById('prev');
+        const shuffleBtn = document.getElementById('shuffle');
+        const mainPlayer = document.getElementById('main-player');
+        const currentSongTitle = document.getElementById('current-song-title');
+        const playlistContainer = document.getElementById('playlist-container');
+        
+        // Initialize event listeners
+        document.getElementById('loadCustomBtn').addEventListener('click', loadCustomPlaylist);
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        nextBtn.addEventListener('click', playNext);
+        prevBtn.addEventListener('click', playPrev);
+        shuffleBtn.addEventListener('click', toggleShuffle);
+        mainAudio.addEventListener('ended', () => {
+            playNext();
+        });
+        
+        // Set up tab switching
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
+            });
+        });
+        
+        // Set up preset playlist buttons
+        const presetButtons = document.querySelectorAll('.preset-btn');
+        presetButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const playlistFile = btn.dataset.playlist;
+                loadPlaylistFromFile(playlistFile);
+            });
+        });
+        
+        // Load playlist from external text file
+        function loadPlaylistFromFile(filename) {
+            // Show loading message
+            playlistContainer.innerHTML = '<div class="loading">Loading playlist...</div>';
+            
+            fetch(filename)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`File not found: ${filename}`);
+                    }
+                    return response.text();
+                })
+                .then(content => {
+                    loadPlaylistFromText(content);
+                })
+                .catch(error => {
+                    showError(`Error loading playlist: ${error.message}. Make sure the file exists in the same folder as this HTML file.`);
+                });
+        }
+        
+        // Load playlist from user-uploaded text file
+        function loadCustomPlaylist() {
+            const fileInput = document.getElementById('txtFileInput');
+            
+            if (fileInput.files.length === 0) {
+                showError("Please select a text file first.");
+                return;
+            }
+            
+            // Show loading message
+            playlistContainer.innerHTML = '<div class="loading">Loading playlist...</div>';
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                const content = event.target.result;
+                loadPlaylistFromText(content);
+            };
+            
+            reader.onerror = function() {
+                showError("Error reading the file.");
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Load playlist from text content
+        function loadPlaylistFromText(content) {
+            // Clear previous playlist
+            playlistContainer.innerHTML = '';
+            playerState.playlist = [];
+            playerState.originalPlaylist = [];
+            
+            const links = content.split('\n').filter(link => link.trim() !== '');
+            
+            if (links.length === 0) {
+                showError("No MP3 links found in the playlist.");
+                return;
+            }
+            
+            // Create playlist
+            links.forEach((link, index) => {
+                const cleanLink = link.trim();
+                // Extract filename from the URL to use as title
+                const fileName = cleanLink.split('/').pop().replace('.mp3', '').replace(/_/g, ' ');
+                
+                // Add to player state
+                playerState.playlist.push({
+                    title: fileName,
+                    src: cleanLink
+                });
+                
+                // Create playlist item
+                const playlistItem = document.createElement('div');
+                playlistItem.className = 'playlist-item';
+                playlistItem.textContent = `${index + 1}. ${fileName}`;
+                playlistItem.dataset.index = index;
+                
+                playlistItem.addEventListener('click', () => {
+                    playerState.currentIndex = parseInt(playlistItem.dataset.index);
+                    loadAndPlayTrack(playerState.currentIndex);
+                    updatePlaylistHighlight();
+                });
+                
+                playlistContainer.appendChild(playlistItem);
+            });
+            
+            // Make a copy for when we want to restore the original order
+            playerState.originalPlaylist = [...playerState.playlist];
+            
+            // Initialize player if we have tracks
+            if (playerState.playlist.length > 0) {
+                mainPlayer.style.display = 'block';
+                playerState.currentIndex = 0;
+                loadTrack(0);
+                updatePlaylistHighlight();
+            }
+        }
+        
+        // Toggle play/pause
+        function togglePlayPause() {
+            if (playerState.playlist.length === 0) return;
+            
+            if (playerState.isPlaying) {
+                mainAudio.pause();
+                playPauseBtn.textContent = '▶️';
+            } else {
+                mainAudio.play();
+                playPauseBtn.textContent = '⏸️';
+            }
+            playerState.isPlaying = !playerState.isPlaying;
+        }
+        
+        // Play next track
+        function playNext() {
+            if (playerState.playlist.length === 0) return;
+            
+            playerState.currentIndex++;
+            if (playerState.currentIndex >= playerState.playlist.length) {
+                playerState.currentIndex = 0;
+            }
+            
+            loadAndPlayTrack(playerState.currentIndex);
+            updatePlaylistHighlight();
+        }
+        
+        // Play previous track
+        function playPrev() {
+            if (playerState.playlist.length === 0) return;
+            
+            playerState.currentIndex--;
+            if (playerState.currentIndex < 0) {
+                playerState.currentIndex = playerState.playlist.length - 1;
+            }
+            
+            loadAndPlayTrack(playerState.currentIndex);
+            updatePlaylistHighlight();
+        }
+        
+        // Toggle shuffle
+        function toggleShuffle() {
+            playerState.isShuffled = !playerState.isShuffled;
+            
+            if (playerState.isShuffled) {
+                // Enable shuffle
+                shuffleBtn.classList.add('active');
+                
+                // Save current track
+                const currentTrack = playerState.playlist[playerState.currentIndex];
+                
+                // Create shuffled indices
+                playerState.shuffledIndices = Array.from(
+                    { length: playerState.playlist.length }, 
+                    (_, i) => i
+                );
+                
+                // Fisher-Yates shuffle algorithm
+                for (let i = playerState.shuffledIndices.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [playerState.shuffledIndices[i], playerState.shuffledIndices[j]] = 
+                    [playerState.shuffledIndices[j], playerState.shuffledIndices[i]];
+                }
+                
+                // Rearrange playlist
+                playerState.playlist = playerState.shuffledIndices.map(
+                    index => playerState.originalPlaylist[index]
+                );
+                
+                // Find current track in shuffled playlist
+                playerState.currentIndex = playerState.playlist.findIndex(
+                    track => track.src === currentTrack.src
+                );
+                
+                updatePlaylistHighlight();
+            } else {
+                // Disable shuffle
+                shuffleBtn.classList.remove('active');
+                
+                // Save current track
+                const currentTrack = playerState.playlist[playerState.currentIndex];
+                
+                // Restore original playlist
+                playerState.playlist = [...playerState.originalPlaylist];
+                
+                // Find current track in original playlist
+                playerState.currentIndex = playerState.playlist.findIndex(
+                    track => track.src === currentTrack.src
+                );
+                
+                updatePlaylistHighlight();
+            }
+        }
+        
+        // Load a track without playing
+        function loadTrack(index) {
+            const track = playerState.playlist[index];
+            mainAudio.src = track.src;
+            currentSongTitle.textContent = track.title;
+            playerState.isPlaying = false;
+            playPauseBtn.textContent = '▶️';
+        }
+        
+        // Load and play a track
+        function loadAndPlayTrack(index) {
+            loadTrack(index);
+            mainAudio.play();
+            playerState.isPlaying = true;
+            playPauseBtn.textContent = '⏸️';
+        }
+        
+        // Update playlist highlight
+        function updatePlaylistHighlight() {
+            const playlistItems = document.querySelectorAll('.playlist-item');
+            playlistItems.forEach(item => item.classList.remove('active'));
+            
+            // Find the playlist item that corresponds to the original index of the current track
+            if (playerState.isShuffled) {
+                const originalIndex = playerState.originalPlaylist.findIndex(
+                    track => track.src === playerState.playlist[playerState.currentIndex].src
+                );
+                const itemToHighlight = document.querySelector(`.playlist-item[data-index="${originalIndex}"]`);
+                if (itemToHighlight) {
+                    itemToHighlight.classList.add('active');
+                }
+            } else {
+                const itemToHighlight = document.querySelector(`.playlist-item[data-index="${playerState.currentIndex}"]`);
+                if (itemToHighlight) {
+                    itemToHighlight.classList.add('active');
+                }
+            }
+        }
+        
+        // Show error message
+        function showError(message) {
+            playlistContainer.innerHTML = '';
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            playlistContainer.appendChild(errorDiv);
+        }
+    </script>
+</body>
+</html>
