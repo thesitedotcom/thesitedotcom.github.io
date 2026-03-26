@@ -1,7 +1,7 @@
 // Check if the user is authenticated
         if (sessionStorage.getItem("authenticated") !== "true") {
             // Redirect to the password entry page
-            window.location.href = "thesitedotcom2.github.io";
+            window.location.href = "https://www.thesitedotcom2.github.io";
         }
 
         // Function to handle the keydown event
